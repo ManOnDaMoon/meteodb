@@ -1,0 +1,9 @@
+{extends '../layout.latte'}
+
+{block content}
+<a href="/station">&lt; Retour à la liste des stations</a>
+<h1>{$station->description}</h1>
+<p>Temp: {$station->currentDataPoint->tempf}</p>
+<p>Pression: {$station->currentDataPoint->baromin}</p>
+<p n:if="$station->last_update">Last update: {$station->last_update|date:'d.m.Y G:i a'}.</p>
+{/block}

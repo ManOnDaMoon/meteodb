@@ -1,0 +1,47 @@
+{
+	"name" : "ManOnDaMoon/meteodb",
+	"version" : "1.3.0",
+	"description" : "A lightweight weather dashboard/database to connect to a WiFi Bresser station",
+	"keywords" : [
+		"bresser",
+		"api",
+		"weather",
+		"weatherstation"
+	],
+	"homepage" : "https://github.com/ManOnDaMoon/meteodb",
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "ManOnDaMoon",
+			"email" : "laurent@manondamoon.com",
+			"homepage" : "https://manondamoon.com"
+		}
+	],
+	"require" : {
+		"php" : "^7.4 || ^8.0",
+		"ext-json" : "*",
+		"flightphp/active-record" : "^0.7.0",
+		"flightphp/core" : "^3.0",
+		"flightphp/runway" : "^1.2",
+		"flightphp/session" : "^0.3.0",
+		"latte/latte" : "^3.1",
+		"tracy/tracy" : "^2.9"
+	},
+	"config" : {
+		"process-timeout" : 0,
+		"sort-packages" : true
+	},
+	"scripts" : {
+		"start" : "php -S localhost:8000 -t public",
+		"post-create-project-cmd" : [
+			"@php -r \"copy('app/config/config_sample.php', 'app/config/config.php');\"",
+			"@php -r \"mkdir('app/models/');\"",
+			"@php -r \"mkdir('app/utils/');\"",
+			"@php -r \"mkdir('app/cache/');\"",
+			"@php -r \"mkdir('app/log/');\""
+		]
+	},
+	"require-dev" : {
+		"flightphp/tracy-extensions" : "^0.1 || ^0.2"
+	},
+	"minimum-stability" : "dev"
+}

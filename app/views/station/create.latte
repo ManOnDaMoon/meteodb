@@ -1,0 +1,14 @@
+{extends '../layout.latte'}
+
+{block content}
+<h1>Ajouter une station</h1>
+<form action="/station" method="post">
+    <p><label><input type="text" name="station_id" placeholder="Identifiant" required></label></p>
+    
+    <p><label><input type="text" name="description" placeholder="Description" required></label></p>
+    
+    <p><label><input type="text" name="key" placeholder="Clé d'accès" required></label></p>
+
+    <button type="submit">Créer</button>
+</form>
+{/block}

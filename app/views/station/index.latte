@@ -1,0 +1,13 @@
+{extends '../layout.latte'}
+
+{block content}
+
+<h1>Stations</h1>
+<p>Stations météo disponibles</p>
+<p><a class="button" href="/station/create">Ajouter une station</a></p>
+{foreach $stations as $station}
+    <h3><a href="/station/{$station->station_id}">{$station->description}</a></h3>
+    {if ($station->currentDataPoint)}<p><small>Temp: {$station->currentDataPoint->tempf} on {$station->currentDataPoint->dateutc}</small></p>{/if}
+{/foreach}
+
+{/block}
