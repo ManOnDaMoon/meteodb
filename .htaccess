@@ -1,0 +1,10 @@
+# Ensure that MutliViews is disabled
+Options -MultiViews
+Options All -Indexes
+
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ public/ [QSA]
+RewriteRule ^(.*)$ public/index.php [QSA,L]
