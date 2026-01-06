@@ -1,5 +1,5 @@
 {
-	"name" : "ManOnDaMoon/meteodb",
+	"name" : "manondamoon/meteodb",
 	"version" : "1.3.0",
 	"description" : "A lightweight weather dashboard/database to connect to a WiFi Bresser station",
 	"keywords" : [
@@ -17,14 +17,14 @@
 		}
 	],
 	"require" : {
-		"php" : "^7.4 || ^8.0",
-		"ext-json" : "*",
-		"flightphp/active-record" : "^0.7.0",
-		"flightphp/core" : "^3.0",
-		"flightphp/runway" : "^1.2",
-		"flightphp/session" : "^0.3.0",
-		"latte/latte" : "^3.1",
-		"tracy/tracy" : "^2.9"
+		"php": "^7.4 || ^8.0",
+		"ext-json": "*",
+		"flightphp/active-record": "^0.7.0",
+		"flightphp/core": "^3.0",
+		"flightphp/runway": "^1.2",
+		"ghostff/session": "dev-master",
+		"latte/latte": "^3.1",
+		"tracy/tracy": "^2.9"
 	},
 	"config" : {
 		"process-timeout" : 0,

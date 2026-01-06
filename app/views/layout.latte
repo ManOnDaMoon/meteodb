@@ -9,5 +9,6 @@
     </head>
     <body style="padding: 15px;">
         {block content}{/block}
+        <p>{if ($username == '')}<a href="{route('login')}">Login</a>{else}<a href="{route('logout')}">Logout</a>{/if}</p>
     </body>
 </html>

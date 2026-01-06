@@ -33,5 +33,8 @@ class SecurityHeadersMiddleware
 		$this->app->response()->header('Referrer-Policy', 'no-referrer-when-downgrade');
 		$this->app->response()->header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
 		$this->app->response()->header('Permissions-Policy', 'geolocation=()');
+		
+		//Cache control:
+		$this->app->response()->header('Cache-Control', 'no-store, no-cache, must-revalidate');
 	}
 }

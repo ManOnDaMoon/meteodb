@@ -80,3 +80,4 @@
 [2026-01-04 19-45-53] PHP Warning: Undefined array key "port" in /Users/laurent/Sites/meteodashboard/vendor/flightphp/active-record/src/commands/RecordCommand.php:219  @  CLI (PID: 59824): runway make:record stations 
 [2026-01-04 19-46-02] PHP Warning: Undefined array key "dbname" in /Users/laurent/Sites/meteodashboard/app/config/services.php:83  @  CLI (PID: 59828): runway make:record datapoints 
 [2026-01-04 19-46-02] PHP Warning: Undefined array key "port" in /Users/laurent/Sites/meteodashboard/vendor/flightphp/active-record/src/commands/RecordCommand.php:219  @  CLI (PID: 59828): runway make:record datapoints 
+[2026-01-05 19-50-49] PHP Warning: Undefined array key "port" in /Users/laurent/Sites/meteodashboard/vendor/flightphp/active-record/src/commands/RecordCommand.php:219  @  CLI (PID: 75599): runway make:record users 

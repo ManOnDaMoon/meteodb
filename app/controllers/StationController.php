@@ -4,23 +4,11 @@ declare(strict_types=1);
 
 namespace app\controllers;
 
-use flight\Engine;
 use app\records\StationRecord;
 use app\records\DatapointRecord;
 
-class StationController
+class StationController extends BaseController
 {
-    /** @var Engine */
-    protected Engine $app;
-
-    /**
-     * Constructor
-     */
-    public function __construct(Engine $app)
-    {
-        $this->app = $app;
-    }
-    
     /**
      * Index
      *

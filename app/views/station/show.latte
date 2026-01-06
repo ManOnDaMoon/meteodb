@@ -6,4 +6,5 @@
 <p>Temp: {$station->currentDataPoint->tempf}</p>
 <p>Pression: {$station->currentDataPoint->baromin}</p>
 <p n:if="$station->last_update">Last update: {$station->last_update|date:'d.m.Y G:i a'}.</p>
+{if ($username)}<p><a class="button" href="{route('station_edit', [ 'station_id' => $station->station_id ])}">Modifier</a></p>{/if}{if ($username)}<p><a class="button" href="{route('delete', [ 'station_id' => $station->station_id ])}">Supprimer</a></p>{/if}
 {/block}
