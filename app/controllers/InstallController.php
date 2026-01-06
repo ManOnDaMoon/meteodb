@@ -62,10 +62,10 @@ class InstallController extends BaseController
             $result = "Installation déjà effectuée.";
         } else {
             try {
-                $this->db()->query($sqlDataPointsTable);
-                $this->db()->query($sqlStationsTable);
-                $this->db()->query($sqlUsersTable);
-            } catch (Exception $e) {
+                $this->db()->query($this->$sqlDataPointsTable);
+                $this->db()->query($this->$sqlStationsTable);
+                $this->db()->query($this->$sqlUsersTable);
+            } catch (\Exception $e) {
                 $result = "Erreur lors de la création des tables : " . print_r($this->db()->errorInfo(),true);
             }
             
