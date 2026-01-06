@@ -4,6 +4,7 @@ use app\middlewares\SecurityHeadersMiddleware;
 use flight\Engine;
 use flight\net\Router;
 use app\middlewares\LoginMiddleware;
+use app\middlewares\WeatherstationUpdateMiddleware;
 
 /** 
  * @var Router $router 
@@ -36,4 +37,4 @@ use app\middlewares\LoginMiddleware;
     // Weatherstation
     $router->group('/weatherstation', function(Router $router) {
         $router->get('/updateweatherstation.php', \app\controllers\StationController::class . '->updateweatherstation');
-    }, [ SecurityHeadersMiddleware::class]);
+    }, [ SecurityHeadersMiddleware::class, WeatherstationUpdateMiddleware::class]);

@@ -47,6 +47,7 @@ class StationController extends BaseController
     {
         $stationData = $this->app->request()->data;
         $StationRecord = new StationRecord($this->app->db());
+        // TODO : Some verification
         $StationRecord->station_id = $stationData->station_id;
         $StationRecord->description = $stationData->description;
         $StationRecord->key = password_hash($stationData->key, PASSWORD_DEFAULT);
@@ -124,10 +125,30 @@ class StationController extends BaseController
      */
     public function updateweatherstation():void
     {
-        // CODE TO UPDATE DataPoints
+        $query= $this->request()->query;
+
+        $DataPoint = new DatapointRecord($this->db());
         
-        // MAYBE MOVE TO DATAPOINTS CONTROLLER ?
+        $DataPoint->station_id = $query->ID;
+        $DataPoint->action = $query->action;
+        $DataPoint->realtime = $query->realtime;
+        $DataPoint->rtfreq = $query->rtfreq;
+        $DataPoint->dateutc = date('Y-m-d H:i:s', $query->dateutc == 'now' ? $this->request()->getVar('REQUEST_TIME') : intval($query->dateutc));
+        $DataPoint->baromin = $query->baromin;
+        $DataPoint->tempf = $query->tempf;
+        $DataPoint->dewptf = $query->dewptf;
+        $DataPoint->humidity = $query->humidity;
+        $DataPoint->windspeedmph = $query->windspeedmph;
+        $DataPoint->windgustmph = $query->windgustmph;
+        $DataPoint->winddir = $query->winddir;
+        $DataPoint->rainin = $query->rainin;
+        $DataPoint->dailyrainin = $query->dailyrainin;
+        $DataPoint->solarradiation = $query->solarradiation;
+        $DataPoint->UV = $query->UV;
+        $DataPoint->indoortempf = $query->indoortempf;
+        $DataPoint->indoorhumidity = $query->indoorhumidity;
         
+        $DataPoint->save();
     }
     
 }
