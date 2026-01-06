@@ -21,7 +21,12 @@ class StationController extends BaseController
        
         foreach($stations as &$station) {
             $DataPointRecord = new DatapointRecord($this->app->db());
-            $station->currentDataPoint = $DataPointRecord->equal('station_id', $station->station_id)->order('dateutc DESC')->find();
+            $DataPointRecord->equal('station_id', $station->station_id)->order('dateutc DESC')->find();
+            if ($DataPointRecord->isHydrated()) {
+                $station->currentDataPoint = $DataPointRecord;
+            } else {
+                $station->currentDataPoint = null;
+            }
         }
         
         $this->app->render('station/index.latte', [ 'page_title' => 'Stations', 'stations' => $stations]);
@@ -67,7 +72,12 @@ class StationController extends BaseController
         $StationRecord = new StationRecord($this->app->db());
         $station = $StationRecord->find($station_id);
         $DatapointRecord = new DatapointRecord($this->app->db());
-        $station->currentDataPoint = $DatapointRecord->eq('station_id', $station->station_id)->order('dateutc DESC')->find();
+        $DatapointRecord->eq('station_id', $station->station_id)->order('dateutc DESC')->find();
+        if ($DatapointRecord->isHydrated()) {
+            $station->currentDataPoint = $DatapointRecord;
+        } else {
+            $station->currentDataPoint = null;
+        }
         $this->app->render('station/show.latte', [ 'page_title' => $station->description, 'station' => $station ]);
     }
     

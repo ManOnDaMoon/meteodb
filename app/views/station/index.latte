@@ -6,7 +6,11 @@
 <p>Stations météo disponibles</p>
 {foreach $stations as $station}
     <h3><a href="/station/{$station->station_id}">{$station->description}</a></h3>
-    {if ($station->currentDataPoint)}<p><small>Temp: {$station->currentDataPoint->tempf} on {$station->currentDataPoint->dateutc}</small></p>{/if}
+    {if ($station->currentDataPoint)}<p><small>Temp : {$station->currentDataPoint->tempc}°C le {$station->currentDataPoint->dateutc|date:'d.m.Y H:i'}</small></p>
+    {else}
+    <p><small>Aucune donnée</small></p>
+    {/if}
+    <hr>
 {/foreach}
 {if ($username)}<p><a class="button" href="{route('station_create')}">Ajouter une station</a></p>{/if}
 {/block}

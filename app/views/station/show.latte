@@ -1,10 +1,36 @@
 {extends '../layout.latte'}
 
 {block content}
-<a href="/station">&lt; Retour à la liste des stations</a>
+<a href="{route(station)}">&lt; Retour à la liste des stations</a>
 <h1>{$station->description}</h1>
-<p>Temp: {$station->currentDataPoint->tempf}</p>
-<p>Pression: {$station->currentDataPoint->baromin}</p>
-<p n:if="$station->last_update">Last update: {$station->last_update|date:'d.m.Y G:i a'}.</p>
-{if ($username)}<p><a class="button" href="{route('station_edit', [ 'station_id' => $station->station_id ])}">Modifier</a></p>{/if}{if ($username)}<p><a class="button" href="{route('delete', [ 'station_id' => $station->station_id ])}">Supprimer</a></p>{/if}
+{if ($station->currentDataPoint)}
+<p><small>Mise à jour le {$station->currentDataPoint->dateutc|date:'d.m.Y H:i'}</small></p>
+<p>Temp: {$station->currentDataPoint->tempc} °C</p>
+<p>Pression: {$station->currentDataPoint->barohpa} HPa</p>
+{else}
+Aucune donnée
+{/if}
+{if ($username)}
+<p><a class="button" href="{route('station_edit', [ 'station_id' => $station->station_id ])}">Modifier</a>
+<label for="modal_1" class="button">Supprimer</label>
+<div class="modal">
+  <input id="modal_1" type="checkbox" />
+  <label for="modal_1" class="overlay"></label>
+  <article>
+    <header>
+      <h3>Supprimer la station</h3>
+      <label for="modal_1" class="close">&times;</label>
+    </header>
+    <section class="content">
+      Attention, la suppression de la station est définitive. Les données (températures,...) sont conservées.
+    </section>
+    <footer>
+      <label for="modal_1" class="button">
+        Annuler
+      </label>
+      <a class="button dangerous" href="{route('delete', [ 'station_id' => $station->station_id ])}">Supprimer</a>
+    </footer>
+  </article>
+</div>
+{/if}
 {/block}
