@@ -38,3 +38,8 @@ use app\middlewares\WeatherstationUpdateMiddleware;
     $router->group('/weatherstation', function(Router $router) {
         $router->get('/updateweatherstation.php', \app\controllers\StationController::class . '->updateweatherstation');
     }, [ SecurityHeadersMiddleware::class, WeatherstationUpdateMiddleware::class]);
+    
+    // Install procedures
+    $router->group('/install', function(Router $router) {
+        $router->get('', \app\controllers\InstallController::class . '->index')->setAlias('install');
+    }, [ SecurityHeadersMiddleware::class]);

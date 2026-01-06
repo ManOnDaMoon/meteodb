@@ -28,4 +28,11 @@ class UserRecord extends \flight\ActiveRecord
     {
         parent::__construct($databaseConnection, 'users');
     }
+    
+    protected function beforeDelete(self $self) {
+        if ($this->id = 1) {
+            // Do not delete admin user
+            $this->app->halt('405', 'Do not delete the admin account');
+        }
+    } 
 }
