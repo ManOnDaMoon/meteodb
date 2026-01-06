@@ -1,6 +1,6 @@
 {
 	"name" : "manondamoon/meteodb",
-	"version" : "1.3.0",
+	"version" : "0.0.1",
 	"description" : "A lightweight weather dashboard/database to connect to a WiFi Bresser station",
 	"keywords" : [
 		"bresser",
