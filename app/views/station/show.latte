@@ -3,34 +3,48 @@
 {block content}
 <a href="{route(station)}">&lt; Retour à la liste des stations</a>
 <h1>{$station->description}</h1>
+<small>Mise à jour le {$station->currentDataPoint->dateutc|date:'d.m.Y H:i'}</small>
+<div class="flex two three-800 four-1000 six-1600">
+
 {if ($station->currentDataPoint)}
-<p><small>Mise à jour le {$station->currentDataPoint->dateutc|date:'d.m.Y H:i'}</small></p>
-<p>Temp: {$station->currentDataPoint->tempc} °C</p>
-<p>Pression: {$station->currentDataPoint->barohpa} HPa</p>
+	<div>
+	<article class="card">
+		<header>Température extérieure</header>
+		<h1><span class="label">{$station->currentDataPoint->tempc} °C</span></h1>
+	</article>
+	</div>
+	<div>
+	<article class="card">
+		<header>Pression atmosphérique</header>
+		<h1><span class="label">{$station->currentDataPoint->barohpa} HPa</span></h1>
+	</article>
+	</div>
+</div>
 {else}
-Aucune donnée
+	Aucune donnée
 {/if}
 {if ($username)}
-<p><a class="button" href="{route('station_edit', [ 'station_id' => $station->station_id ])}">Modifier</a>
-<label for="modal_1" class="button">Supprimer</label>
-<div class="modal">
-  <input id="modal_1" type="checkbox" />
-  <label for="modal_1" class="overlay"></label>
-  <article>
-    <header>
-      <h3>Supprimer la station</h3>
-      <label for="modal_1" class="close">&times;</label>
-    </header>
-    <section class="content">
-      Attention, la suppression de la station est définitive. Les données (températures,...) sont conservées.
-    </section>
-    <footer>
-      <label for="modal_1" class="button">
-        Annuler
-      </label>
-      <a class="button dangerous" href="{route('delete', [ 'station_id' => $station->station_id ])}">Supprimer</a>
-    </footer>
-  </article>
-</div>
+	<a class="button" href="{route('station_edit', [ 'station_id' => $station->station_id ])}">Modifier</a>
+	
+	<label for="modal_1" class="button warning">Supprimer</label>
+	<div class="modal">
+	  <input id="modal_1" type="checkbox" />
+	  <label for="modal_1" class="overlay"></label>
+	  <article>
+	    <header>
+	      <h3>Supprimer la station ?</h3>
+	      <label for="modal_1" class="close">&times;</label>
+	    </header>
+	    <section class="content">
+	      Attention, la suppression de la station est définitive. Les données (températures,...) sont conservées.
+	    </section>
+	    <footer>
+	      <label for="modal_1" class="button">
+	        Annuler
+	      </label>
+	      <a class="button dangerous" href="{route('delete', [ 'station_id' => $station->station_id ])}">Supprimer</a>
+	    </footer>
+	  </article>
+	</div>
 {/if}
 {/block}

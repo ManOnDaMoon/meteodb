@@ -7,8 +7,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{$page_title ? $page_title.' - '}Meteo Dashboard</title>
     </head>
-    <body style="padding: 15px;">
-        {block content}{/block}
-        <p>{if ($username == '')}<a href="{route('login')}">Login</a>{else}<a href="{route('logout')}">Logout</a>{/if}</p>
+    <body>
+	    <nav class="demo">
+		  <a href="{route('home')}" class="brand">
+		    <span>Meteo Dashboard</span>
+		  </a>
+		
+		  <!-- responsive-->
+		  <input id="bmenub" type="checkbox" class="show">
+		  <label for="bmenub" class="burger pseudo button icon-cog">&#8801;</label>
+		
+		  <div class="menu">
+  		    {if (!$username)}<a href="{route('login')}" class="pseudo button icon-puzzle">Connexion</a>{/if}
+		    {if ($username)}
+		    	<a href="{route('station_create')}" class="pseudo button" >Ajouter une station</a>
+		    	<a href="{route('logout')}" class="pseudo button">Déconnexion</a>
+	    	{/if}
+		  </div>
+		</nav>
+		<main style="padding: 68px 15px 15px 15px;">
+        	{block content}{/block}
+        </main>
     </body>
 </html>

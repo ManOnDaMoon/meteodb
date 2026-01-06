@@ -1,16 +1,25 @@
 {extends '../layout.latte'}
 
 {block content}
-
 <h1>Stations</h1>
-<p>Stations météo disponibles</p>
+<div class="flex two three-800 four-1000 six-1600">
 {foreach $stations as $station}
-    <h3><a href="/station/{$station->station_id}">{$station->description}</a></h3>
-    {if ($station->currentDataPoint)}<p><small>Temp : {$station->currentDataPoint->tempc}°C le {$station->currentDataPoint->dateutc|date:'d.m.Y H:i'}</small></p>
-    {else}
-    <p><small>Aucune donnée</small></p>
+<div>
+<article class="card">
+    <header>
+    	<a href="/station/{$station->station_id}">{$station->description}</a>
+    </header>
+    {if ($station->currentDataPoint)}
+    <h1><span class="label">{$station->currentDataPoint->tempc}°C</span></h1>
     {/if}
-    <hr>
+    <footer>
+	    {if ($station->currentDataPoint)}<p><small>Mise à jour le {$station->currentDataPoint->dateutc|date:'d/m/Y H\hi'}</small></p>
+	    {else}
+	    <p><small>Aucune donnée</small></p>
+	    {/if}
+    </footer>
+</article>
+</div>
 {/foreach}
-{if ($username)}<p><a class="button" href="{route('station_create')}">Ajouter une station</a></p>{/if}
+</div>
 {/block}
