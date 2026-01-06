@@ -9,7 +9,7 @@ use app\records\UserRecord;
 
 class InstallController extends BaseController
 {
-    $sqlDataPointsTable = "
+    protected string $_sqlDataPointsTable = "
         CREATE TABLE IF NOT EXISTS `DataPoints` (
         	`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
         	`station_id` VARCHAR(30) NOT NULL ,
@@ -33,7 +33,7 @@ class InstallController extends BaseController
             INDEX (`station_id`, `dateutc`)
         ) ENGINE = InnoDB;";
     
-    $sqlStationsTable = "
+    protected string $_sqlStationsTable = "
         CREATE TABLE IF NOT EXISTS `Stations` (
             `station_id` VARCHAR(30) NOT NULL PRIMARY KEY,
             `description` VARCHAR(256) ,
@@ -43,7 +43,7 @@ class InstallController extends BaseController
         ) ENGINE = InnoDB;
         ";
     
-    $sqlUsersTable = "
+    protected string $_sqlUsersTable = "
         CREATE TABLE IF NOT EXISTS `Users` (
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
             `username` VARCHAR(30) NOT NULL,
@@ -62,9 +62,9 @@ class InstallController extends BaseController
             $result = "Installation déjà effectuée.";
         } else {
             try {
-                $this->db()->query($this->$sqlDataPointsTable);
-                $this->db()->query($this->$sqlStationsTable);
-                $this->db()->query($this->$sqlUsersTable);
+                $this->db()->query($this->$_sqlDataPointsTable);
+                $this->db()->query($this->$_sqlStationsTable);
+                $this->db()->query($this->$_sqlUsersTable);
             } catch (\Exception $e) {
                 $result = "Erreur lors de la création des tables : " . print_r($this->db()->errorInfo(),true);
             }
