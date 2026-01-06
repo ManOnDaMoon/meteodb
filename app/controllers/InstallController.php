@@ -6,11 +6,15 @@ namespace app\controllers;
 
 use flight\Engine;
 use app\records\UserRecord;
+use Latte\Bridges\Tracy\TracyExtension;
 
 class InstallController extends BaseController
 {
-    protected string $_sqlDataPointsTable = "
-        CREATE TABLE IF NOT EXISTS `DataPoints` (
+       
+    public function index(): void
+    {
+        $sqlDataPointsTable = "
+        CREATE TABLE IF NOT EXISTS `datapoints` (
         	`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
         	`station_id` VARCHAR(30) NOT NULL ,
         	`action` VARCHAR(30) ,
@@ -32,9 +36,9 @@ class InstallController extends BaseController
         	`indoorhumidity` INT ,
             INDEX (`station_id`, `dateutc`)
         ) ENGINE = InnoDB;";
-    
-    protected string $_sqlStationsTable = "
-        CREATE TABLE IF NOT EXISTS `Stations` (
+        
+        $sqlStationsTable = "
+        CREATE TABLE IF NOT EXISTS `stations` (
             `station_id` VARCHAR(30) NOT NULL PRIMARY KEY,
             `description` VARCHAR(256) ,
             `position` POINT ,
@@ -42,38 +46,37 @@ class InstallController extends BaseController
             `last_update` DATETIME
         ) ENGINE = InnoDB;
         ";
-    
-    protected string $_sqlUsersTable = "
-        CREATE TABLE IF NOT EXISTS `Users` (
+        
+        $sqlUsersTable = "
+        CREATE TABLE IF NOT EXISTS `users` (
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
             `username` VARCHAR(30) NOT NULL,
             `password` VARCHAR(60) NOT NULL,
             UNIQUE(`username`)
         ) ENGINE = InnoDB;
         ";
-    
-    public function index(): void
-    {
-        $UserRecord = new UserRecord($this->db());
         
-        $UserRecord->find(1);
+        $sqlTestInstall = "SELECT * FROM users";
+        $notInstalled = false;
+        try {
+            $result = $this->db()->query($sqlTestInstall);
+        } catch (\Exception $e)  {
+            $notInstalled = ($this->db()->errorCode() == '42S02');
+        }
         
-        if ($UserRecord->isHydrated()) {
-            $result = "Installation déjà effectuée.";
-        } else {
-            try {
-                $this->db()->query($this->$_sqlDataPointsTable);
-                $this->db()->query($this->$_sqlStationsTable);
-                $this->db()->query($this->$_sqlUsersTable);
-            } catch (\Exception $e) {
-                $result = "Erreur lors de la création des tables : " . print_r($this->db()->errorInfo(),true);
-            }
-            
+        if ($notInstalled) {
+            $this->db()->query($sqlDataPointsTable);
+            $this->db()->query($sqlStationsTable);
+            $this->db()->query($sqlUsersTable);
+
+            $UserRecord = new UserRecord($this->db());
             $UserRecord->id = 1;
             $UserRecord->username = 'admin';
             $UserRecord->password = password_hash('password', PASSWORD_DEFAULT);
             $UserRecord->save();
-            $result = "Installation terminée.";
+            $result = "Installation effectuée.";
+        } else {
+            $result = "Installation déjà effectuée.";
         }
         
         $this->app->render('install.latte', ['result' => $result]);
