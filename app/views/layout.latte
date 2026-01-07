@@ -8,7 +8,7 @@
         <title>{$page_title ? $page_title.' - '}Meteo Dashboard</title>
     </head>
     <body>
-	    <nav class="demo">
+	    <nav>
 		  <a href="{route('home')}" class="brand">
 		    <span>Meteo Dashboard</span>
 		  </a>
@@ -20,12 +20,13 @@
 		  <div class="menu">
   		    {if (!$username)}<a href="{route('login')}" class="pseudo button icon-puzzle">Connexion</a>{/if}
 		    {if ($username)}
-		    	<a href="{route('station_create')}" class="pseudo button" >Ajouter une station</a>
+		    	<a href="{route('station')}" class="pseudo button">Stations</a>
+		    	<a href="{route('user')}" class="pseudo button">Utilisateurs</a>
 		    	<a href="{route('logout')}" class="pseudo button">Déconnexion</a>
 	    	{/if}
 		  </div>
 		</nav>
-		<main style="padding: 68px 15px 15px 15px;">
+		<main style="padding: 50px 15px 15px 15px;">
         	{block content}{/block}
         </main>
     </body>

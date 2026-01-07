@@ -1,0 +1,47 @@
+{extends '../layout.latte'}
+
+{block content}
+<h1>Utilisateurs</h1>
+<div>
+<table class="primary">
+  <thead>
+    <tr>
+      <th>Utilisateurs</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+	{foreach $users as $user}
+    <tr>
+      <td>{$user->username}</td>
+      <td>
+      	<a href="{route('user_edit', ['id' => $user->id])}" class="button">Modifier</a>
+      	<label for="modal_1" class="button warning">Supprimer</label>
+		<div class="modal">
+		  <input id="modal_1" type="checkbox" />
+		  <label for="modal_1" class="overlay"></label>
+		  <article>
+		    <header>
+		      <h3>Supprimer l'utilisateur ?</h3>
+		      <label for="modal_1" class="close">&times;</label>
+		    </header>
+		    <section class="content">
+		      Attention, la suppression de l'utilisateur sera définitive.
+		    </section>
+		    <footer>
+		      <label for="modal_1" class="button">
+		        Annuler
+		      </label>
+		      <a class="button dangerous" href="{route('user_delete', [ 'id' => $user->id ])}">Supprimer</a>
+		    </footer>
+		  </article>
+	</div>
+      </td>
+    </tr>
+	{/foreach}
+	</tbody>
+</table>	
+</div>
+
+<a href="{route('user_create')}" class="button">Ajouter un utilisateur</a>
+{/block}

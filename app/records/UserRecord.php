@@ -30,9 +30,9 @@ class UserRecord extends \flight\ActiveRecord
     }
     
     protected function beforeDelete(self $self) {
-        if ($this->id = 1) {
+        if ($this->id == 1) {
             // Do not delete admin user
-            $this->app->halt('405', 'Do not delete the admin account');
+            \Flight::app()->halt('405', 'Do not delete the admin account');
         }
     } 
 }

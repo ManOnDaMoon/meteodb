@@ -26,18 +26,28 @@ use app\middlewares\WeatherstationUpdateMiddleware;
     // Station
     $router->group('/station', function(Router $router) {    
         $router->get('', \app\controllers\StationController::class . '->index')->setAlias('station');
-        $router->get('/@station_id', \app\controllers\StationController::class . '->show');
+        $router->get('/@station_id', \app\controllers\StationController::class . '->show')->setAlias('station_show');
         $router->get('-create', \app\controllers\StationController::class . '->create')->setAlias('station_create')->addMiddleware(LoginMiddleware::class);
-        $router->post('', \app\controllers\StationController::class . '->store')->addMiddleware(LoginMiddleware::class);
+        $router->post('', \app\controllers\StationController::class . '->store')->setAlias('station_store')->addMiddleware(LoginMiddleware::class);
         $router->get('/@station_id/edit', \app\controllers\StationController::class . '->edit')->setAlias('station_edit')->addMiddleware(LoginMiddleware::class);
-        $router->post('/@station_id/edit', \app\controllers\StationController::class . '->update')->addMiddleware(LoginMiddleware::class);
-        $router->get('/@station_id/delete', \app\controllers\StationController::class . '->destroy')->setAlias('delete')->addMiddleware(LoginMiddleware::class);
+        $router->post('/@station_id/edit', \app\controllers\StationController::class . '->update')->setAlias('station_update')->addMiddleware(LoginMiddleware::class);
+        $router->get('/@station_id/delete', \app\controllers\StationController::class . '->destroy')->setAlias('station_delete')->addMiddleware(LoginMiddleware::class);
     }, [ SecurityHeadersMiddleware::class]);
     
     // Weatherstation
     $router->group('/weatherstation', function(Router $router) {
         $router->get('/updateweatherstation.php', \app\controllers\StationController::class . '->updateweatherstation');
     }, [ SecurityHeadersMiddleware::class, WeatherstationUpdateMiddleware::class]);
+    
+    // User
+    $router->group('/user', function(Router $router) {
+        $router->get('', \app\controllers\UserController::class . '->index')->setAlias('user');
+        $router->get('/@id/edit', \app\controllers\UserController::class . '->edit')->setAlias('user_edit');
+        $router->post('/@id/edit', \app\controllers\UserController::class . '->update')->setAlias('user_update');
+        $router->get('/@id/delete', \app\controllers\UserController::class . '->destroy')->setAlias('user_delete');
+        $router->get('/create', \app\controllers\UserController::class . '->create')->setAlias('user_create');
+        $router->post('', \app\controllers\UserController::class . '->store')->setAlias('user_store');
+    }, [ SecurityHeadersMiddleware::class, LoginMiddleware::class]);
     
     // Install procedures
     $router->group('/install', function(Router $router) {

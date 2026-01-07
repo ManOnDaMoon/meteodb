@@ -46,7 +46,7 @@ class DatapointRecord extends \flight\ActiveRecord
     }
     
     private function RoundIt($ee){
-        return round($ee, 2);
+        return round($ee, 1);
     }
     
     private function toKM( $a) {
@@ -124,17 +124,26 @@ class DatapointRecord extends \flight\ActiveRecord
         return $cardinal;
     }
     
-    
+    // On unique record, translate data to SI
     protected function afterFind(self $self)
     {
-        $this->barohpa = $this->toHPA($self->baromin);
-        $this->tempc = $this->toC($this->tempf);
-        $this->dewptc = $this->toC($this->dewptf);
-        $this->windspeedkmh = $this->toKM($this->windspeedmph);
-        $this->windgustkmh = $this->toKM($this->windgustmph);
-        $this->windcardinal = $this->wind_cardinal($this->winddir);
-        $this->rainmm = $this->toMM($this->rainin);
-        $this->dailyrainmm = $this->toMM($this->dailyrainin);
-        $this->indoortempc = $this->toC($this->indoortempf);
+        $this->setCustomData('barohpa', $this->toHPA($self->baromin));
+        $this->setCustomData('tempc', $this->toC($this->tempf));
+        $this->setCustomData('dewptc', $this->toC($this->dewptf));
+        $this->setCustomData('windspeedkmh', $this->toKM($this->windspeedmph));
+        $this->setCustomData('windgustkmh', $this->toKM($this->windgustmph));
+        $this->setCustomData('windcardinal', $this->wind_cardinal($this->winddir));
+        $this->setCustomData('rainmm', $this->toMM($this->rainin));
+        $this->setCustomData('dailyrainmm', $this->toMM($this->dailyrainin));
+        $this->setCustomData('indoortempc', $this->toC($this->indoortempf));
+    }
+    
+    // Update parent station "last_update" field
+    protected function afterSave(self $self)
+    {
+        $StationRecord = new StationRecord($this->databaseConnection);
+        $StationRecord->find($this->station_id);
+        $StationRecord->last_update = $this->dateutc;
+        $StationRecord->save();
     }
 }

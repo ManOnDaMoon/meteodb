@@ -2,13 +2,11 @@
 
 {block content}
 <h1>Modifier une station</h1>
-<form action="/station/{$station->station_id}/edit" method="post">
-    <label for="description">Description</label>
-    <input type="text" name="description" placeholder="Description" value="{$station->description}" required>
-
-    <label for="key">Clé d'accès</label>
-    <label><input type="text" name="key" placeholder="" value="">
-
-    <button type="submit">Mettre à jour</button>
+<form action="{route('station_edit', ['station_id' => $station->station_id])}" method="post">
+<fieldset class="flex one">
+    <label><input type="text" name="description" placeholder="Description" value="{$station->description}" required></label>
+    <label><input type="text" name="key" placeholder="Clé d'accès" value=""></label>
+    <label><button type="submit">Mettre à jour</button></label>
+</fieldset>
 </form>
 {/block}

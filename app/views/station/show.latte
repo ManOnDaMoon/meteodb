@@ -3,10 +3,9 @@
 {block content}
 <a href="{route(station)}">&lt; Retour à la liste des stations</a>
 <h1>{$station->description}</h1>
+{if ($station->currentDataPoint)}
 <small>Mise à jour le {$station->currentDataPoint->dateutc|date:'d.m.Y H:i'}</small>
 <div class="flex two three-800 four-1000 six-1600">
-
-{if ($station->currentDataPoint)}
 	<div>
 	<article class="card">
 		<header>Température extérieure</header>
@@ -21,7 +20,9 @@
 	</div>
 </div>
 {else}
-	Aucune donnée
+<div>
+	<p>Aucune donnée</p>
+</div>
 {/if}
 {if ($username)}
 	<a class="button" href="{route('station_edit', [ 'station_id' => $station->station_id ])}">Modifier</a>
@@ -42,7 +43,7 @@
 	      <label for="modal_1" class="button">
 	        Annuler
 	      </label>
-	      <a class="button dangerous" href="{route('delete', [ 'station_id' => $station->station_id ])}">Supprimer</a>
+	      <a class="button dangerous" href="{route('station_delete', [ 'station_id' => $station->station_id ])}">Supprimer</a>
 	    </footer>
 	  </article>
 	</div>

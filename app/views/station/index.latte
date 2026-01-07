@@ -7,7 +7,7 @@
 <div>
 <article class="card">
     <header>
-    	<a href="/station/{$station->station_id}">{$station->description}</a>
+    	<a href="{route('station_show', ['station_id' => $station->station_id])}">{$station->description}</a>
     </header>
     {if ($station->currentDataPoint)}
     <h1><span class="label">{$station->currentDataPoint->tempc}°C</span></h1>
@@ -22,4 +22,5 @@
 </div>
 {/foreach}
 </div>
+<a href="{route('station_create')}" class="button">Ajouter une station</a>
 {/block}
