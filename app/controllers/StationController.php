@@ -17,7 +17,7 @@ class StationController extends BaseController
     public function index(): void
     {
         $StationRecord = new StationRecord($this->app->db());
-        $stations = $StationRecord->order('station_id ASC')->findAll();
+        $stations = $StationRecord->order('description ASC')->findAll();
        
         foreach($stations as &$station) {
             $DataPointRecord = new DatapointRecord($this->app->db());

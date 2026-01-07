@@ -2,5 +2,6 @@
 
 {block content}
 <h1>Meteo Dashboard</h1>
-<p><a href="/station">Voir les stations</a></p>
+<p><a href="{route('station')}">Voir les stations</a></p>
+{if (!$username)}<p><a href="{route('login')}">Connexion</a></p>{/if}
 {/block}

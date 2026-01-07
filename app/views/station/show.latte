@@ -1,29 +1,134 @@
 {extends '../layout.latte'}
 
 {block content}
-<a href="{route(station)}">&lt; Retour à la liste des stations</a>
 <h1>{$station->description}</h1>
 {if ($station->currentDataPoint)}
 <small>Mise à jour le {$station->currentDataPoint->dateutc|date:'d.m.Y H:i'}</small>
-<div class="flex two three-800 four-1000 six-1600">
-	<div>
-	<article class="card">
-		<header>Température extérieure</header>
-		<h1><span class="label">{$station->currentDataPoint->tempc} °C</span></h1>
-	</article>
-	</div>
-	<div>
-	<article class="card">
-		<header>Pression atmosphérique</header>
-		<h1><span class="label">{$station->currentDataPoint->barohpa} HPa</span></h1>
-	</article>
-	</div>
+<div class="tabs {if ($username)}three{else}two{/if}">
+	<input id='tab-1' type='radio' name='tabgroupB' checked />
+	<label class="pseudo button toggle" for="tab-1">Actuel</label>
+	<input id='tab-2' type='radio' name='tabgroupB'>
+	<label class="pseudo button toggle" for="tab-2">Vent</label>
+	{if ($username)}
+	<input id='tab-3' type='radio' name='tabgroupB'>
+	<label class="pseudo button toggle" for="tab-3">Intérieur</label>
+	{/if}
+
+	<div class="row">
+		<div>
+			<h2>Actuel</h2>
+			<div class="flex two three-800 four-1000 six-1600">
+				<div>
+				<article class="card">
+					<header style="text-align: center;">Température</header>
+					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->tempc}&nbsp;°C</h1></span>
+				</article>
+				</div>
+				<div>
+				<article class="card">
+					<header style="text-align: center;">Humidité</header>
+					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->humidity}&nbsp;%</h1></span>
+				</article>
+				</div>
+				<div>
+				<article class="card">
+					<header style="text-align: center;">Pression atmosphérique</header>
+					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->barohpa}&nbsp;HPa</h1></span>
+				</article>
+				</div>
+				<div>
+				<article class="card">
+					<header style="text-align: center;">Point de rosée</header>
+					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->dewptc}&nbsp;°C</h1></span>
+				</article>
+				</div>
+				<div>
+				<article class="card">
+					<header style="text-align: center;">Pluie</header>
+					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->rainmm}&nbsp;mm</h1></span>
+				</article>
+				</div>
+				<div>
+				<article class="card">
+					<header style="text-align: center;">Pluie quotidienne</header>
+					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->dailyrainmm}&nbsp;mm</h1></span>
+				</article>
+				</div>
+				<div>
+				<article class="card">
+					<header style="text-align: center;">Rayonnement solaire</header>
+					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->solarradiation}&nbsp;W/m²</h1></span>
+				</article>
+				</div>
+				<div>
+				<article class="card">
+					<header style="text-align: center;">Indice UV</header>
+					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->UV}</h1></span>
+				</article>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<h2>Vent</h2>
+			<div class="flex two three-800 four-1000 six-1600">
+				<div>
+				<article class="card">
+					<header style="text-align: center;">Vitesse du vent</header>
+					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->windspeedkmh}&nbsp;km/h</h1></span>
+				</article>
+				</div>
+				<div>
+				<article class="card">
+					<header style="text-align: center;">Rafale maximale de vent</header>
+					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->windgustkmh}&nbsp;km/h</h1></span>
+				</article>
+				</div>
+				<div>
+				<article class="card">
+					<header style="text-align: center;">Direction du vent</header>
+					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->winddir}&nbsp;°</h1></span>
+				</article>
+				</div>
+				<div>
+				<article class="card">
+					<header style="text-align: center;">Direction du vent</header>
+					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->windcardinal}</h1></span>
+				</article>
+				</div>
+			</div>
+		</div>
+		
+		{if ($username)}
+		<div>
+			<h2>Intérieur</h2>
+			<div class="flex two three-800 four-1000 six-1600">
+				<div>
+				<article class="card">
+					<header style="text-align: center;">Température</header>
+					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->indoortempc}&nbsp;°C</h1></span>
+				</article>
+				</div>
+				<div>
+				<article class="card">
+					<header style="text-align: center;">Humidité</header>
+					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->indoorhumidity}&nbsp;%</h1></span>
+				</article>
+				</div>
+			</div>
+		</div>
+		{/if}
 </div>
 {else}
+
 <div>
 	<p>Aucune donnée</p>
 </div>
+
 {/if}
+
+
+
 {if ($username)}
 	<a class="button" href="{route('station_edit', [ 'station_id' => $station->station_id ])}">Modifier</a>
 	
@@ -48,4 +153,6 @@
 	  </article>
 	</div>
 {/if}
+
+
 {/block}
