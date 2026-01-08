@@ -52,9 +52,7 @@ Debugger::$strictMode = true; // Show all errors (set to E_ALL & ~E_DEPRECATED f
 // Debugger::$maxDepth = 5; // Max depth of dumped structures (default: 3)
 // Debugger::$editor = 'vscode'; // Enable clickable file links in debug bar
 // Debugger::$email = 'your@email.com'; // Send error notifications
-if (Debugger::$showBar === true && php_sapi_name() !== 'cli') {
-    (new TracyExtensionLoader($app, [ 'session_data' => (new Session)->getAll()])); // Load FlightPHP Tracy extensions
-}
+
 
 /**********************************************
  *           Database Service Setup           *
@@ -118,3 +116,8 @@ $app->register('session', \Ghostff\Session\Session::class, [
     ]
     
 ]);
+
+if (Debugger::$showBar === true && php_sapi_name() !== 'cli') {
+    (new TracyExtensionLoader($app, [ 'session_data' => $app->session()->getAll()])); // Load FlightPHP Tracy extensions
+}
+

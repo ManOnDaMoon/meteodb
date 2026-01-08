@@ -8,6 +8,7 @@ use app\records\UserRecord;
 use Tracy\Debugger;
 use Ghostff;
 use Ghostff\Session\Session;
+use http\Cookie;
 
 class LoginController extends BaseController
 {
@@ -33,14 +34,9 @@ class LoginController extends BaseController
         $user = $UserRecord->eq('username', $postData->username)->find();
         if (($user->isHydrated()) && (password_verify($postData->password, $user->password) == 1)) {
             if ($postData->rememberme == 'on') {
-                $session = new Session([
-                    Session::CONFIG_START_OPTIONS => [
-                        'cookie_lifetime' => 30 * 86400 // Does not work??
-                    ]
-                ]);
-            } else {
-                $session = $this->session();
+                //TODO
             }
+            $session = $this->session();
             $session->set('user', $user->username);
             $session->set('user_id', $user->id);
             $session->commit();

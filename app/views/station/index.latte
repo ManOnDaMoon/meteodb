@@ -2,25 +2,27 @@
 
 {block content}
 <h1>Stations</h1>
-<div class="flex two three-800 four-1000 six-1600">
-{foreach $stations as $station}
-<div>
-<article class="card">
-    <header>
-    	<a href="{route('station_show', ['station_id' => $station->station_id])}">{$station->description}</a>
-    </header>
-    {if ($station->currentDataPoint)}
-    <h1><span class="label">{$station->currentDataPoint->tempc}°C</span></h1>
-    {/if}
-    <footer>
-	    {if ($station->currentDataPoint)}<p><small>Mise à jour le {$station->currentDataPoint->dateutc|date:'d/m/Y H\hi'}</small></p>
-	    {else}
-	    <p><small>Aucune donnée</small></p>
-	    {/if}
-    </footer>
-</article>
-</div>
-{/foreach}
+<div class="flex two three-600 four-800 five-1000">
+	{foreach $stations as $station}
+	<div>
+		<article class="card" style="height: 100%;">
+		    <header style="text-align: center;">
+		    	<a href="{route('station_show', ['station_id' => $station->station_id])}">{$station->description}</a>
+		    </header>
+		    <div>
+		    {if ($station->currentDataPoint)}
+		    	<a href="{route('station_show', ['station_id' => $station->station_id])}" class="button stack" style="text-align: center;">🌡 {$station->currentDataPoint->tempc}°C</a>
+		    	<a href="{route('station_show', ['station_id' => $station->station_id])}" class="button stack" style="text-align: center;">☔ {$station->currentDataPoint->dailyrainmm}mm</a>
+		    	<a href="{route('station_show', ['station_id' => $station->station_id])}" class="button stack" style="text-align: center;">💦 {$station->currentDataPoint->humidity}%</a>
+		    	<span class="pseudo button stack" style="text-align: center;"><small>{$station->currentDataPoint->dateutc|date:'d/m/Y H\hi'}</small></span>
+		    				    {else}
+			    <p style="text-align: center;"><small>Aucune donnée</small></p>
+		    {/if}
+		    </div>
+		</article>
+	</div>
+	{/foreach}
+
 </div>
 <a href="{route('station_create')}" class="button">Ajouter une station</a>
 {/block}
