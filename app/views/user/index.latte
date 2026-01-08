@@ -16,20 +16,20 @@
       <td>{$user->username}</td>
       <td>
       	<a href="{route('user_edit', ['id' => $user->id])}" class="button">Modifier</a>
-      	<label for="modal_1" class="button warning">Supprimer</label>
+      	<label for="modal_{$user->id}" class="button warning">Supprimer</label>
 		<div class="modal">
-		  <input id="modal_1" type="checkbox" />
-		  <label for="modal_1" class="overlay"></label>
+		  <input id="modal_{$user->id}" type="checkbox" />
+		  <label for="modal_{$user->id}" class="overlay"></label>
 		  <article>
 		    <header>
-		      <h3>Supprimer l'utilisateur ?</h3>
-		      <label for="modal_1" class="close">&times;</label>
+		      <h3>Supprimer {$user->username} ?</h3>
+		      <label for="modal_{$user->id}" class="close">&times;</label>
 		    </header>
 		    <section class="content">
 		      Attention, la suppression de l'utilisateur sera définitive.
 		    </section>
 		    <footer>
-		      <label for="modal_1" class="button">
+		      <label for="modal_{$user->id}" class="button">
 		        Annuler
 		      </label>
 		      <a class="button dangerous" href="{route('user_delete', [ 'id' => $user->id ])}">Supprimer</a>

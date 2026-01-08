@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace app\controllers;
 
 use app\records\UserRecord;
+use Tracy\Debugger;
+use Ghostff;
+use Ghostff\Session\Session;
 
 class LoginController extends BaseController
 {
@@ -29,9 +32,19 @@ class LoginController extends BaseController
         $UserRecord = new UserRecord($this->app->db());
         $user = $UserRecord->eq('username', $postData->username)->find();
         if (($user->isHydrated()) && (password_verify($postData->password, $user->password) == 1)) {
-            $this->session()->set('user', $user->username);
-            $this->session()->set('user_id', $user->id);
-            $this->session()->commit();
+            if ($postData->rememberme == 'on') {
+                $session = new Session([
+                    Session::CONFIG_START_OPTIONS => [
+                        'cookie_lifetime' => 30 * 86400 // Does not work??
+                    ]
+                ]);
+            } else {
+                $session = $this->session();
+            }
+            $session->set('user', $user->username);
+            $session->set('user_id', $user->id);
+            $session->commit();
+
             $this->redirect($this->getUrl('station'));
         } else {
             $this->redirect($this->getUrl('login'));
