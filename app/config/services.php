@@ -85,7 +85,12 @@ $Latte->addFunction('route', function(string $alias, array $params = []) use ($a
 $app->map('render', function(string $templatePath, array $data = [], ?string $block = null) use ($app, $Latte) {
     // Add the username that's available in every template.
     $data += [
-        'username' => $app->session()->getOrDefault('user', '')
+        'username' => $app->session()->getOrDefault('user', ''),
+        'pwa' => [
+            'enable' => $app->get('pwa.enable'),
+            'app_name' => $app->get('pwa.app_name'),
+            'app_short_name' => $app->get('pwa.app_short_name')
+        ]
     ];
     $templatePath = __DIR__ . '/../views/'. $templatePath;
     $Latte->render($templatePath, $data, $block);
