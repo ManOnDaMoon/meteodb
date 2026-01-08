@@ -3,7 +3,15 @@
 {block content}
 <h1>{$station->description}</h1>
 {if ($station->currentDataPoint)}
-<small>Mise à jour le {$station->currentDataPoint->dateutc|date:'d/m/Y à H\hi'}</small>
+<small>Mise à jour le {$station->currentDataPoint->dateutc|date:'d/m/Y à H\hi'} <a id="refresh" href="{route('station_show', ['station_id' => $station->station_id])}" class="button" style="font-size: .75em;" disabled>Actualiser</a></small>
+<script nonce="{$nonce}">
+document.addEventListener("DOMContentLoaded", function() {
+    // Your initial code here
+    setTimeout(function() {
+        document.getElementById('refresh').removeAttribute('disabled');
+    }, 60000); 
+});
+</script>
 <div class="tabs {if ($username)}three{else}two{/if}">
 	<input id='tab-1' type='radio' name='tabgroupB' checked />
 	<label class="pseudo button toggle" for="tab-1">Actuel</label>
@@ -20,49 +28,49 @@
 			<div class="flex two three-800 four-1000 six-1600">
 				<div>
 				<article class="card">
-					<header style="text-align: center;"><h5>🌡&nbsp;️Température</h5></header>
+					<header style="text-align: center;"><strong>🌡&nbsp;️Température</strong></header>
 					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->tempc}&nbsp;°C</h1></span>
 				</article>
 				</div>
 				<div>
 				<article class="card">
-					<header style="text-align: center;"><h5>💦&nbsp;Humidité</h5></header>
+					<header style="text-align: center;"><strong>💦&nbsp;Humidité</strong></header>
 					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->humidity}&nbsp;%</h1></span>
 				</article>
 				</div>
 				<div>
 				<article class="card">
-					<header style="text-align: center;"><h5>🛞&nbsp;Pression atmosphérique</h5></header>
+					<header style="text-align: center;"><strong>🛞&nbsp;Pression atmosphérique</strong></header>
 					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->barohpa}&nbsp;HPa</h1></span>
 				</article>
 				</div>
 				<div>
 				<article class="card">
-					<header style="text-align: center;"><h5>💧&nbsp;Point de rosée</h5></header>
+					<header style="text-align: center;"><strong>💧&nbsp;Point de rosée</strong></header>
 					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->dewptc}&nbsp;°C</h1></span>
 				</article>
 				</div>
 				<div>
 				<article class="card">
-					<header style="text-align: center;"><h5>🌧️️&nbsp;Pluie quotidienne</h5></header>
+					<header style="text-align: center;"><strong>🌧️️&nbsp;Pluie quotidienne</strong></header>
 					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->dailyrainmm}&nbsp;mm</h1></span>
 				</article>
 				</div>
 				<div>
 				<article class="card">
-					<header style="text-align: center;"><h5>☔️&nbsp;Intensité de pluie</h5></header>
+					<header style="text-align: center;"><strong>☔️&nbsp;Intensité de pluie</strong></header>
 					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->rainmm}&nbsp;mm/h</h1></span>
 				</article>
 				</div>
 				<div>
 				<article class="card">
-					<header style="text-align: center;"><h5>🌞&nbsp;Rayonnement solaire</h5></header>
+					<header style="text-align: center;"><strong>🌞&nbsp;Rayonnement solaire</strong></header>
 					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->solarradiation}&nbsp;W/m²</h1></span>
 				</article>
 				</div>
 				<div>
 				<article class="card">
-					<header style="text-align: center;"><h5>🔥&nbsp;Indice UV</h5></header>
+					<header style="text-align: center;"><strong>🔥&nbsp;Indice UV</strong></header>
 					<span class="label pseudo" style="margin: 0;"><h1>{$station->currentDataPoint->UV}</h1></span>
 				</article>
 				</div>

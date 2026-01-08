@@ -16,8 +16,8 @@ class PWAController extends BaseController
     public function pwa(): void
     {        
         $manifest = [
-            "name" => $this->app->get('manifest.app_name'),
-            "short_name" => $this->app->get('manifest.app_short_name'),
+            "name" => $this->app->get('pwa.app_name'),
+            "short_name" => $this->app->get('pwa.app_short_name'),
             "display" => "standalone",
             "scope" => "/",
             "start_url" => "/"

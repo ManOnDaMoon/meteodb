@@ -86,6 +86,7 @@ $app->map('render', function(string $templatePath, array $data = [], ?string $bl
     // Add the username that's available in every template.
     $data += [
         'username' => $app->session()->getOrDefault('user', ''),
+        'nonce' => $app->get('csp_nonce'),
         'pwa' => [
             'enable' => $app->get('pwa.enable'),
             'app_name' => $app->get('pwa.app_name'),
