@@ -57,6 +57,10 @@ $app->set('flight.views.path', PROJECT_ROOT . '/app/views'); // Path to views/te
 $app->set('flight.views.extension', '.latte');  // View file extension (e.g., '.php', '.latte')
 $app->set('flight.content_length', false);    // Send content length header. Usually false unless required by proxy
 
+// Custom config variables
+$app->set('manifest.app_name', '');
+$app->set('manifest.app_short_name', '');
+
 // Generate a CSP nonce for each request and store in $app
 $nonce = bin2hex(random_bytes(16));
 $app->set('csp_nonce', $nonce);

@@ -20,7 +20,7 @@ use app\middlewares\WeatherstationUpdateMiddleware;
         $router->get('/login', \app\controllers\LoginController::class . '->index')->setAlias('login');;
         $router->post('/login', \app\controllers\LoginController::class . '->authenticate')->setAlias('login_authenticate');;
         $router->get('/logout', \app\controllers\LogoutController::class . '->index')->setAlias('logout');;
-        
+        $router->get('/manifest.webmanifest', \app\controllers\PWAController::class . '->pwa');
     }, [ SecurityHeadersMiddleware::class]);
 	
     // Station
@@ -53,3 +53,4 @@ use app\middlewares\WeatherstationUpdateMiddleware;
     $router->group('/install', function(Router $router) {
         $router->get('', \app\controllers\InstallController::class . '->index')->setAlias('install');
     }, [ SecurityHeadersMiddleware::class]);
+    
