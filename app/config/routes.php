@@ -15,7 +15,9 @@ use app\middlewares\WeatherstationUpdateMiddleware;
 
     // Home and Login routes
     $router->group('', function(Router $router) {
-        $router->get('/', \app\controllers\HomeController::class . '->index')->setAlias('home');
+        // Disable home while we find a use to it.
+        //$router->get('/', \app\controllers\HomeController::class . '->index')->setAlias('home');
+        $router->get('/', \app\controllers\StationController::class . '->index')->setAlias('home');
         // Login
         $router->get('/login', \app\controllers\LoginController::class . '->index')->setAlias('login');;
         $router->post('/login', \app\controllers\LoginController::class . '->authenticate')->setAlias('login_authenticate');;
