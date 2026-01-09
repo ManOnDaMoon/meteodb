@@ -3,14 +3,19 @@
 {block content}
 <h1>{$station->description}</h1>
 {if ($station->currentDataPoint)}
-<small>Mise à jour le {$station->currentDataPoint->dateutc|date:'d/m/Y à H\hi'} <a id="refresh" href="{route('station_show', ['station_id' => $station->station_id])}" class="button" style="font-size: .75em;" disabled>Actualiser</a></small>
+<small>Mise à jour le {$station->currentDataPoint->dateutc|date:'d/m/Y à H\hi'} <button id="refresh" class="button" style="font-size: .75em;" disabled>Actualiser</button></small>
 <script nonce="{$nonce}">
-document.addEventListener("DOMContentLoaded", function() {
-    // Your initial code here
-    setTimeout(function() {
-        document.getElementById('refresh').removeAttribute('disabled');
-    }, 60000); 
-});
+document.addEventListener(
+	"DOMContentLoaded",
+	function() {
+    	setTimeout(
+    		function() {
+    			$refresh = document.getElementById('refresh');
+        		$refresh.addEventListener('click', function() { location.reload() }, false);
+        		$refresh.removeAttribute('disabled');
+    		},
+    		60000);
+	}); 
 </script>
 <div class="tabs {if ($username)}three{else}two{/if}">
 	<input id='tab-1' type='radio' name='tabgroupB' checked />
