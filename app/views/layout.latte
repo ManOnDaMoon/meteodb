@@ -10,6 +10,7 @@
         	<link rel="apple-touch-icon" href="/public/img/apple-touch-icon.png">
         	<link rel="manifest" href="/manifest.webmanifest">
         {/if}
+		{block headscript}{/block}
     </head>
     <body>
 	    <nav>
@@ -24,13 +25,16 @@
 		
 		  <div class="menu">
 			<a href="{route('station')}" class="pseudo button">Stations</a>
-			{if (!$username)}<a href="{route('login')}" class="pseudo button icon-puzzle">Connexion</a>{/if}
+			{if (!$username)}<a href="{route('login')}?back={Flight::request()->getVar('REQUEST_URI')}" class="pseudo button icon-puzzle">Connexion</a>{/if}
 		    {if ($username)}
 		    	<a href="{route('user')}" class="pseudo button">Utilisateurs</a>
 		    	<a href="{route('logout')}" class="pseudo button">Déconnexion</a>
 	    	{/if}
 		  </div>
 		</nav>
+		
+		{block messenger}{/block}
+		
 		<main style="padding: 50px 15px 15px 15px;">
         	{block content}{/block}
         </main>

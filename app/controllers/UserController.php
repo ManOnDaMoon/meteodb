@@ -59,6 +59,13 @@ class UserController extends BaseController
      */
     public function destroy(string $id): void
     {
+        if (intval($id) == 1) {
+            $session = $this->session();
+            $session->setFlash('error_message', "Impossible de supprimer l'utilisateur principal.");
+            $session->commit();
+            $this->app->redirect('/user');
+            return;
+        }
         $UserRecord = new UserRecord($this->app->db());
         $user = $UserRecord->find($id);
         $user->delete();

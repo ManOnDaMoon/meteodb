@@ -30,20 +30,25 @@ class LoginController extends BaseController
     public function authenticate(): void
     {
         $postData = $this->request()->data;
+        $session = $this->session();
         $UserRecord = new UserRecord($this->app->db());
         $user = $UserRecord->eq('username', $postData->username)->find();
-        if (($user->isHydrated()) && (password_verify($postData->password, $user->password) == 1)) {
-            if ($postData->rememberme == 'on') {
-                //TODO
-            }
-            $session = $this->session();
-            $session->set('user', $user->username);
-            $session->set('user_id', $user->id);
+        if (!($user->isHydrated()
+            && (password_verify($postData->password, $user->password) == 1))) {
+            $session->setFlash('error_message', "Nom d'utilisateur ou mot de passe non valides.");
             $session->commit();
-
-            $this->redirect($this->getUrl('station'));
-        } else {
             $this->redirect($this->getUrl('login'));
+            return;
+        } 
+        
+        if ($postData->rememberme == 'on') {
+            //TODO
         }
+        
+        $session->set('user', $user->username);
+        $session->set('user_id', $user->id);
+        $session->commit();
+        
+        $this->redirect($this->getUrl('station'));
     }
 }

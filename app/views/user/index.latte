@@ -1,5 +1,33 @@
 {extends '../layout.latte'}
 
+{block messenger}
+	{ifset $error_message}
+		<div class="modal">
+			<div class="modal">
+			  <input id="modal_error" type="checkbox" />
+			  <label for="modal_error" class="overlay"></label>
+			  <article>
+			    <header>
+			      <h3>Erreur</h3>
+			      <label for="modal_error" class="close">&times;</label>
+			    </header>
+			    <section class="content">
+			      {$error_message}
+			    </section>
+			    <footer>
+			      <label for="modal_error" class="button">
+			        OK
+			      </label>
+			    </footer>
+			  </article>
+			</div>
+		</div>
+		<script nonce="{$nonce}">
+			document.getElementById('modal_error').checked = true;
+		</script>
+	{/ifset}
+{/block}
+
 {block content}
 <h1>Utilisateurs</h1>
 <div>
@@ -35,7 +63,7 @@
 		      <a class="button dangerous" href="{route('user_delete', [ 'id' => $user->id ])}">Supprimer</a>
 		    </footer>
 		  </article>
-	</div>
+		</div>
       </td>
     </tr>
 	{/foreach}
