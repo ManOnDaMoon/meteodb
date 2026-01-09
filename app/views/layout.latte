@@ -25,7 +25,7 @@
 		
 		  <div class="menu">
 			<a href="{route('station')}" class="pseudo button">Stations</a>
-			{if (!$username)}<a href="{route('login')}?back={Flight::request()->getVar('REQUEST_URI')}" class="pseudo button icon-puzzle">Connexion</a>{/if}
+			{if (!$username)}<a href="{route('login')}" class="pseudo button icon-puzzle">Connexion</a>{/if}
 		    {if ($username)}
 		    	<a href="{route('user')}" class="pseudo button">Utilisateurs</a>
 		    	<a href="{route('logout')}" class="pseudo button">Déconnexion</a>

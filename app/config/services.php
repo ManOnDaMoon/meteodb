@@ -92,6 +92,7 @@ $app->map('render', function(string $templatePath, array $data = [], ?string $bl
             'app_short_name' => $app->get('pwa.app_short_name')
         ]
     ];
+    $app->session()->commit(); // Mandatory to remove flash message
     $templatePath = __DIR__ . '/../views/'. $templatePath;
     $Latte->render($templatePath, $data, $block);
 });
