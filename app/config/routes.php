@@ -34,6 +34,7 @@ use app\middlewares\WeatherstationUpdateMiddleware;
         $router->get('/@station_id/edit', \app\controllers\StationController::class . '->edit')->setAlias('station_edit')->addMiddleware(LoginMiddleware::class);
         $router->post('/@station_id/edit', \app\controllers\StationController::class . '->update')->setAlias('station_update')->addMiddleware(LoginMiddleware::class);
         $router->get('/@station_id/delete', \app\controllers\StationController::class . '->destroy')->setAlias('station_delete')->addMiddleware(LoginMiddleware::class);
+        $router->get('/@station_id/evolution', \app\controllers\StationController::class . '->evolution')->setAlias('station_evolution')->addMiddleware(LoginMiddleware::class);
     }, [ SecurityHeadersMiddleware::class]);
     
     // Weatherstation

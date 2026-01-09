@@ -1,0 +1,26 @@
+{extends '../layout.latte'}
+
+{block content}
+
+<h1>Jour</h1>
+<div class="flex">
+{foreach $data_day as $point}
+	<span>{$point->tempc}</span>
+{/foreach}
+</div>
+
+<h1>Semaine</h1>
+<div class="flex">
+{foreach $data_week as $point}
+	<span>{$point->tempc}</span>
+{/foreach}
+</div>
+
+<h1>Année</h1>
+<div class="flex">
+{foreach $data_year as $point}
+	<span>{$point->tempc}</span>
+{/foreach}
+</div>
+
+{/block}

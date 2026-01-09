@@ -124,18 +124,55 @@ class DatapointRecord extends \flight\ActiveRecord
         return $cardinal;
     }
     
-    // On unique record, translate data to SI
+    /**
+     * 
+     * @param DatapointRecord $record
+     */
+    private function convertToISU($record)
+    {
+        if (isset($record->baromin)) {
+            $record->setCustomData('barohpa', $record->toHPA($record->baromin));
+        }
+        if (isset($record->tempf)) {
+            $record->setCustomData('tempc', $record->toC($record->tempf));
+        }
+        if (isset($record->dewptf)) {
+            $record->setCustomData('dewptc', $record->toC($record->dewptf));
+        }
+        if (isset($record->dewptf)) {
+            $record->setCustomData('windspeedkmh', $record->toKM($record->windspeedmph));
+        }
+        if (isset($record->dewptf)) {
+            $record->setCustomData('windgustkmh', $record->toKM($record->windgustmph));
+        }
+        if (isset($record->dewptf)) {
+            $record->setCustomData('windcardinal', $record->wind_cardinal($record->winddir));
+        }
+        if (isset($record->dewptf)) {
+            $record->setCustomData('rainmm', $record->toMM($record->rainin));
+        }
+        if (isset($record->dewptf)) {
+            $record->setCustomData('dailyrainmm', $record->toMM($record->dailyrainin));
+        }
+        if (isset($record->dewptf)) {
+            $record->setCustomData('indoortempc', $record->toC($record->indoortempf));
+        }
+    }
+    
     protected function afterFind(self $self)
     {
-        $this->setCustomData('barohpa', $this->toHPA($self->baromin));
-        $this->setCustomData('tempc', $this->toC($this->tempf));
-        $this->setCustomData('dewptc', $this->toC($this->dewptf));
-        $this->setCustomData('windspeedkmh', $this->toKM($this->windspeedmph));
-        $this->setCustomData('windgustkmh', $this->toKM($this->windgustmph));
-        $this->setCustomData('windcardinal', $this->wind_cardinal($this->winddir));
-        $this->setCustomData('rainmm', $this->toMM($this->rainin));
-        $this->setCustomData('dailyrainmm', $this->toMM($this->dailyrainin));
-        $this->setCustomData('indoortempc', $this->toC($this->indoortempf));
+        $this->convertToISU($self);
+    }
+    
+    /**
+     * 
+     * @param array<int,ActiveRecord> $results
+     */
+    protected function afterFindAll($results)
+    {
+        foreach($results as $record) {
+            $this->convertToISU($record);
+        }
     }
     
     // Update parent station "last_update" field

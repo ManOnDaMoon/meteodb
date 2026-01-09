@@ -6,6 +6,7 @@ namespace app\controllers;
 
 use app\records\StationRecord;
 use app\records\DatapointRecord;
+use Tracy\Debugger;
 
 class StationController extends BaseController
 {
@@ -161,4 +162,37 @@ class StationController extends BaseController
         $DataPoint->save();
     }
     
+    /**
+     * Show evolution graphs
+     *
+     * @return void
+     */
+    public function evolution(string $station_id):void
+    {
+        $StationRecord = new StationRecord($this->app->db());
+        $StationRecord->find($station_id);
+        
+        if ($StationRecord->isHydrated()){
+                    
+            // Weekley evol
+            $DataPoint = new DatapointRecord($this->db());
+            // TODO : limit to current week
+            $data_week = $DataPoint->select('date_format(dateutc, \'%Y-%m-%d\') as day, avg(tempf) as tempf')->eq('station_id', $station_id)->groupBy('day')->findAll();
+            
+            // TODO : limit to current day
+            $data_day = $DataPoint->select('date_format(dateutc, \'%Y-%m-%d %H:00:00\') as hour, avg(tempf) as tempf')->eq('station_id', $station_id)->groupBy('hour')->findAll();
+            
+            // TODO : limit to current year
+            $data_year = $DataPoint->select('date_format(dateutc, \'%Y-%m-1\') as month, avg(tempf) as tempf')->eq('station_id', $station_id)->groupBy('month')->findAll();
+            
+            
+            $this->app->render('station/evolution.latte', [
+                'page_title' => 'Evolution',
+                'station' => $StationRecord,
+                'data_year' => $data_year,
+                'data_week' => $data_week,
+                'data_day' => $data_day
+            ]);
+        }
+    }
 }
