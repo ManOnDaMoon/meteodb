@@ -5,6 +5,8 @@ use flight\Engine;
 use flight\net\Router;
 use app\middlewares\LoginMiddleware;
 use app\middlewares\WeatherstationUpdateMiddleware;
+use app\records\DatapointRecord;
+use app\controllers\DataPointsController;
 
 /** 
  * @var Router $router 
@@ -35,6 +37,9 @@ use app\middlewares\WeatherstationUpdateMiddleware;
         $router->post('/@station_id/edit', \app\controllers\StationController::class . '->update')->setAlias('station_update')->addMiddleware(LoginMiddleware::class);
         $router->get('/@station_id/delete', \app\controllers\StationController::class . '->destroy')->setAlias('station_delete')->addMiddleware(LoginMiddleware::class);
         $router->get('/@station_id/evolution', \app\controllers\StationController::class . '->evolution')->setAlias('station_evolution')->addMiddleware(LoginMiddleware::class);
+        
+        // Datapoints JSON API
+        $router->get('/@station_id/daily', DataPointsController::class . '->daily')->setAlias('data_daily')->addMiddleware(LoginMiddleware::class);
     }, [ SecurityHeadersMiddleware::class]);
     
     // Weatherstation
@@ -51,6 +56,7 @@ use app\middlewares\WeatherstationUpdateMiddleware;
         $router->get('/create', \app\controllers\UserController::class . '->create')->setAlias('user_create');
         $router->post('', \app\controllers\UserController::class . '->store')->setAlias('user_store');
     }, [ SecurityHeadersMiddleware::class, LoginMiddleware::class]);
+
     
     // Install procedures
     $router->group('/install', function(Router $router) {

@@ -25,6 +25,8 @@ document.addEventListener(
 	{if ($username)}
 	<input id='tab-3' type='radio' name='tabgroupB'>
 	<label class="pseudo button toggle" for="tab-3">Intérieur</label>
+	<input id='tab-evol' type='radio' name='tabgroubB'>
+	<label for='tab-evol'><a class="pseudo button toggle" href="{route('station_evolution', ['station_id' => $station->station_id])}">Evolution</a></label>
 	{/if}
 
 	<div class="row">

@@ -1,26 +1,45 @@
 {extends '../layout.latte'}
 
+{block headscript}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.css" nonce="{$nonce}">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.js" nonce="{$nonce}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/d3@5" nonce="{$nonce}"></script>
+	<script src="/public/js/main.js" nonce="{$nonce}"></script>
+{/block}
+
 {block content}
 
-<h1>Jour</h1>
-<div class="flex">
-{foreach $data_day as $point}
-	<span>{$point->tempc}</span>
-{/foreach}
-</div>
-
-<h1>Semaine</h1>
-<div class="flex">
-{foreach $data_week as $point}
-	<span>{$point->tempc}</span>
-{/foreach}
-</div>
-
-<h1>Année</h1>
-<div class="flex">
-{foreach $data_year as $point}
-	<span>{$point->tempc}</span>
-{/foreach}
-</div>
-
+<h1>{$station->description}</h1>
+{if ($station->currentDataPoint)}
+	<small>Mise à jour le {$station->currentDataPoint->dateutc|date:'d/m/Y à H\hi'} <button id="refresh" class="button" style="font-size: .75em;" disabled>Actualiser</button></small>
+	<script nonce="{$nonce}">
+	document.addEventListener(
+		"DOMContentLoaded",
+		function() {
+	    	setTimeout(
+	    		function() {
+	    			$refresh = document.getElementById('refresh');
+	        		$refresh.addEventListener('click', function() { location.reload() }, false);
+	        		$refresh.removeAttribute('disabled');
+	    		},
+	    		60000);
+		}); 
+	</script>
+	<div class="tabs one">
+		<input id='tab-1' type='radio' name='tabgroupB' checked />
+		<label class="pseudo button toggle" for="tab-1">Jour</label>
+		<input id='tab-data' type='radio' name='tabgroubB'>
+		<label for='tab-data'><a class="pseudo button toggle" href="{route('station_show', ['station_id' => $station->station_id])}">Retour</a></label>
+		<div class="row">
+			<div>
+				<h2>Jour</h2>
+				<div id="chart"></div>
+			</div>
+		</div>
+	</div>
+	{else}
+	<div>
+		<p>Aucune donnée</p>
+	</div>
+{/if}
 {/block}

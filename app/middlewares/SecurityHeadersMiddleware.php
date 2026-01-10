@@ -25,7 +25,7 @@ class SecurityHeadersMiddleware
 			$tracyCssBypass = ' \'unsafe-inline\'';
 		}
 
-		$csp = "default-src 'self'; script-src 'self' 'nonce-{$nonce}' 'strict-dynamic'; style-src 'self' {$tracyCssBypass} https://cdn.jsdelivr.net/npm/picnic; img-src 'self' data:;";
+		$csp = "default-src 'self'; script-src 'self' 'nonce-{$nonce}' 'strict-dynamic' ; style-src 'self' {$tracyCssBypass} https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.css https://cdn.jsdelivr.net/npm/picnic ; img-src 'self' data:;";
 		$this->app->response()->header('X-Frame-Options', 'SAMEORIGIN');
 		$this->app->response()->header("Content-Security-Policy", $csp);
 		$this->app->response()->header('X-XSS-Protection', '1; mode=block');
