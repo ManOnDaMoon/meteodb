@@ -41,6 +41,7 @@ use app\controllers\DataPointsController;
         // Datapoints JSON API
         $router->get('/@station_id/daily-temp', DataPointsController::class . '->dailytemp')->setAlias('data_daily_temperature')->addMiddleware(LoginMiddleware::class);
         $router->get('/@station_id/daily-press', DataPointsController::class . '->dailypress')->setAlias('data_daily_pressure')->addMiddleware(LoginMiddleware::class);
+        $router->get('/@station_id/daily-humid', DataPointsController::class . '->dailyhumid')->setAlias('data_daily_humidity')->addMiddleware(LoginMiddleware::class);
     }, [ SecurityHeadersMiddleware::class]);
     
     // Weatherstation

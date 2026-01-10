@@ -47,4 +47,23 @@ class DataPointsController extends BaseController
             
             $this->app->json($result);
     }
+    
+    public function dailyhumid(string $station_id):void
+    {
+        $DataPoint = new DatapointRecord($this->db());
+        $data = $DataPoint->select(
+            'date_format(dateutc, \'%Y-%m-%d %H:00:00\') as hour,
+            avg(humidity) as humidity,
+            min(humidity) as minhumidity,
+            max(humidity) as maxhumidity')
+            ->eq('station_id', $station_id)
+            ->gte('dateutc', date('Y-m-d H:i:s', time() - 86400))
+            ->groupBy('hour')->findAll();
+            $result = [];
+            foreach ($data as $dataRecord) {
+                $result[] = $dataRecord->toArray();
+            }
+            
+            $this->app->json($result);
+    }
 }

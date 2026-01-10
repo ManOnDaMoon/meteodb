@@ -2,9 +2,8 @@
 /**
  *  Draw chart for daily data - using specific date format showin only hours
  * 
- *  TODO : add value series as parameter in div attribute
  */
-function drawDailyChart(chartId, value, valueName, valueUnit, valueMin = null, valueMax = null) {
+function drawDailyChart(chartId, value, valueName, valueUnit, valueMin = null, valueMax = null, colorScheme = null) {
 	dailyGraph = document.getElementById(chartId);
 	if (dailyGraph != null) {
 		fetch(dailyGraph.getAttribute('data-url'), { 
@@ -72,9 +71,12 @@ function drawDailyChart(chartId, value, valueName, valueUnit, valueMin = null, v
 			chartOptions['tooltip']['format']['value'] = (function (v) { return v + valueUnit; });
 			
 			// Color scheme
-			chartOptions['color'] = {
-				pattern: ['#8B0000', '#A94141', '#5C0000']
-			};
+			chartOptions['color'] = {};
+			if (colorScheme != null) {
+				chartOptions['color']['pattern'] = colorScheme;
+			} else {
+				chartOptions['color']['pattern'] = ['#8B0000', '#A94141', '#5C0000'];
+			}
 			
 			// Container to create graph in
 			chartOptions['bindto'] = '#' + chartId;
@@ -109,6 +111,7 @@ function() {
 	if (chartContainer != null) {
 		drawDailyChart('daily_temp_chart', ['tempc', 'mintempc', 'maxtempc'], ['Moy', 'Min', 'Max'], '°C');
 		drawDailyChart('daily_press_chart', ['barohpa', 'minbarohpa', 'maxbarohpa'], ['Moy', 'Min', 'Max'], 'hPa');
+		drawDailyChart('daily_humid_chart', ['humidity', 'minhumidity', 'maxhumidity'], ['Moy', 'Min', 'Max'], '%', 10, 90, ['Blue', 'LightBlue', 'DarkBlue']);
 	}
 
 }); 
