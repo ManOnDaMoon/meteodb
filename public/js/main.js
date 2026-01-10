@@ -12,28 +12,32 @@ function drawDailyChart(chartId, value, valueName, valueUnit, valueMin = null, v
 		})
 		.then(function(response) { return response.json(); })
 		.then(function(jsonData) {
-			var chart = c3.generate({
-				bindto: '#' + chartId,
+			chartOptions = {
 			    data: {
 			        x: 'Time',
 					xFormat: '%Y-%m-%d %H:%M:%S',
 			        json: jsonData,
 					keys: {
 					        x: 'hour',
-					        value: [value]
+					        value: [value, 'min' + value, 'max' + value]
 					      },
 					axes: {
-						value,
+						[value]: 'y',
+						['min' + value] : 'y',
+						['max' + value] : 'y'
 					},
 					names: {
-						[value]: valueName,
-					}
+						[value]: 'Moy',
+						['min' + value]: 'Min',
+						['max' + value]: 'Max'
+					},
+					type: 'spline'
 			    },
 			    axis: {
 			        x: {
 			            type: 'timeseries',
 			            tick: {
-			                format: '%H:00'
+			                format: '%Hh'
 			            }
 			        },
 					y: {
@@ -52,7 +56,12 @@ function drawDailyChart(chartId, value, valueName, valueUnit, valueMin = null, v
 						value: function (v, id, i, j) { return v + '°C'; } // apply this format to both y and y2
 	        		}
 				}
-			});
+			};
+			chartOptions['color'] = {
+				pattern: ['#8B0000', '#A94141', '#5C0000']
+			};
+			chartOptions['bindto'] = '#' + chartId;
+			var chart = c3.generate(chartOptions);
 		});
 	};	
 };

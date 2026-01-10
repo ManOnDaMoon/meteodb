@@ -135,6 +135,10 @@ class DatapointRecord extends \flight\ActiveRecord
         }
         if (isset($record->tempf)) {
             $record->setCustomData('tempc', $record->toC($record->tempf));
+            if (isset($record->mintempf) && isset($record->maxtempf)) {
+                $record->setCustomData('mintempc', $record->toC($record->mintempf));
+                $record->setCustomData('maxtempc', $record->toC($record->maxtempf));
+            }
         }
         if (isset($record->dewptf)) {
             $record->setCustomData('dewptc', $record->toC($record->dewptf));

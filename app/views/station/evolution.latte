@@ -23,7 +23,7 @@
 		<div class="row">
 			<div>
 				<h2>Jour</h2>
-				<div class="chart_container" style="width: 90%; margin: auto;">
+				<div class="chart_container" style="width: 90%; max-height: 50%; margin: auto; .c3-spline: { stroke-width: 2px; }">
 					<h3>Température extérieure</h3> 
 					<div id="daily_chart" data-url="{route('data_daily', ['station_id' => $station->station_id])}"></div>
 				</div>
