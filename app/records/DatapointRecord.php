@@ -132,6 +132,10 @@ class DatapointRecord extends \flight\ActiveRecord
     {
         if (isset($record->baromin)) {
             $record->setCustomData('barohpa', $record->toHPA($record->baromin));
+            if (isset($record->minbaromin) && isset($record->maxbaromin)) {
+                $record->setCustomData('minbarohpa', $record->toHPA($record->minbaromin));
+                $record->setCustomData('maxbarohpa', $record->toHPA($record->maxbaromin));
+            }
         }
         if (isset($record->tempf)) {
             $record->setCustomData('tempc', $record->toC($record->tempf));

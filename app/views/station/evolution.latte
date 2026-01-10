@@ -23,9 +23,11 @@
 		<div class="row">
 			<div>
 				<h2>Jour</h2>
-				<div class="chart_container" style="width: 90%; max-height: 50%; margin: auto; .c3-spline: { stroke-width: 2px; }">
+				<div id="chart_container" style="width: 90%; margin: auto; ">
 					<h3>Température extérieure</h3> 
-					<div id="daily_chart" data-url="{route('data_daily', ['station_id' => $station->station_id])}"></div>
+					<div id="daily_temp_chart" data-url="{route('data_daily_temperature', ['station_id' => $station->station_id])}"></div>
+					<h3>Pression athmosphérique</h3> 
+					<div id="daily_press_chart" data-url="{route('data_daily_pressure', ['station_id' => $station->station_id])}"></div>
 				</div>
 			</div>
 		</div>
