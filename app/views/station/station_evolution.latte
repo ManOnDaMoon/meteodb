@@ -16,10 +16,12 @@
 	
 	</script>
 	<div class="tabs one">
-		<input id='tab-1' type='radio' name='tabgroupB' checked />
-		<label class="pseudo button toggle" for="tab-1">Jour</label>
-		<input id='tab-data' type='radio' name='tabgroubB'>
-		<label for='tab-data'><a class="pseudo button toggle" href="{route('station_show', ['station_id' => $station->station_id])}">Retour</a></label>
+		<input id='tab-day' type='radio' name='tabgroupB' checked />
+		<label class="pseudo button toggle" for="tab-day">Jour</label>
+		<input id='tab-week' type='radio' name='tabgroupB'/>
+		<label for='tab-week'><a class="pseudo button toggle" href="{route('station_evolution_week', ['station_id' => $station->station_id])}">Semaine</a></label>
+		<input id='tab-show' type='radio' name='tabgroubB'>
+		<label for='tab-show'><a class="pseudo button toggle" href="{route('station_show', ['station_id' => $station->station_id])}">Retour</a></label>
 		<div class="row">
 			<div>
 				<h2>Jour</h2>

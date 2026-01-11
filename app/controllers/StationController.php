@@ -181,24 +181,12 @@ class StationController extends BaseController
         }
         
         if ($StationRecord->isHydrated()){
-                    
-            // Weekley evol
-            $DataPoint = new DatapointRecord($this->db());
-            // TODO : limit to current week
-            //$data_week = $DataPoint->select('date_format(dateutc, \'%Y-%m-%d\') as day, avg(tempf) as tempf')->eq('station_id', $station_id)->groupBy('day')->findAll();
             
+            $template = 'station/' . $this->app->router()->current()->alias . '.latte';
             
-            
-            // TODO : limit to current year
-            //$data_year = $DataPoint->select('date_format(dateutc, \'%Y-%m-1\') as month, avg(tempf) as tempf')->eq('station_id', $station_id)->groupBy('month')->findAll();
-            
-            
-            $this->app->render('station/evolution.latte', [
+            $this->app->render($template, [
                 'page_title' => 'Evolution',
-                'station' => $StationRecord,
-//                 'data_year' => $data_year,
-//                 'data_week' => $data_week,
-//                 'data_day' => $data_day
+                'station' => $StationRecord
             ]);
         }
     }

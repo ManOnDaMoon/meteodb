@@ -37,12 +37,18 @@ use app\controllers\DataPointsController;
         $router->post('/@station_id/edit', \app\controllers\StationController::class . '->update')->setAlias('station_update')->addMiddleware(LoginMiddleware::class);
         $router->get('/@station_id/delete', \app\controllers\StationController::class . '->destroy')->setAlias('station_delete')->addMiddleware(LoginMiddleware::class);
         $router->get('/@station_id/evolution', \app\controllers\StationController::class . '->evolution')->setAlias('station_evolution')->addMiddleware(LoginMiddleware::class);
+        $router->get('/@station_id/evolution-week', \app\controllers\StationController::class . '->evolution')->setAlias('station_evolution_week')->addMiddleware(LoginMiddleware::class);
         
         // Datapoints JSON API
         $router->get('/@station_id/daily-temp', DataPointsController::class . '->dailytemp')->setAlias('data_daily_temperature')->addMiddleware(LoginMiddleware::class);
         $router->get('/@station_id/daily-press', DataPointsController::class . '->dailypress')->setAlias('data_daily_pressure')->addMiddleware(LoginMiddleware::class);
         $router->get('/@station_id/daily-humid', DataPointsController::class . '->dailyhumid')->setAlias('data_daily_humidity')->addMiddleware(LoginMiddleware::class);
         $router->get('/@station_id/daily-indoortemp', DataPointsController::class . '->dailyindoortemp')->setAlias('data_daily_indoortemp')->addMiddleware(LoginMiddleware::class);
+        $router->get('/@station_id/weekly-temp', DataPointsController::class . '->weeklytemp')->setAlias('data_weekly_temperature')->addMiddleware(LoginMiddleware::class);
+        $router->get('/@station_id/weekly-press', DataPointsController::class . '->weeklypress')->setAlias('data_weekly_pressure')->addMiddleware(LoginMiddleware::class);
+        $router->get('/@station_id/weekly-humid', DataPointsController::class . '->weeklyhumid')->setAlias('data_weekly_humidity')->addMiddleware(LoginMiddleware::class);
+        $router->get('/@station_id/weekly-indoortemp', DataPointsController::class . '->weeklyindoortemp')->setAlias('data_weekly_indoortemp')->addMiddleware(LoginMiddleware::class);
+        
     }, [ SecurityHeadersMiddleware::class]);
     
     // Weatherstation
