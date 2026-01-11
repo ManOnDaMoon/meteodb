@@ -162,8 +162,12 @@ class DatapointRecord extends \flight\ActiveRecord
         if (isset($record->dewptf)) {
             $record->setCustomData('dailyrainmm', $record->toMM($record->dailyrainin));
         }
-        if (isset($record->dewptf)) {
+        if (isset($record->indoortempf)) {
             $record->setCustomData('indoortempc', $record->toC($record->indoortempf));
+            if (isset($record->minindoortempf) && isset($record->maxindoortempf)) {
+                $record->setCustomData('minindoortempc', $record->toC($record->minindoortempf));
+                $record->setCustomData('maxindoortempc', $record->toC($record->maxindoortempf));
+            }
         }
     }
     

@@ -109,9 +109,27 @@ function() {
 	
 	chartContainer = document.getElementById('chart_container');
 	if (chartContainer != null) {
-		drawDailyChart('daily_temp_chart', ['tempc', 'mintempc', 'maxtempc'], ['Moy', 'Min', 'Max'], '°C');
-		drawDailyChart('daily_press_chart', ['barohpa', 'minbarohpa', 'maxbarohpa'], ['Moy', 'Min', 'Max'], 'hPa');
-		drawDailyChart('daily_humid_chart', ['humidity', 'minhumidity', 'maxhumidity'], ['Moy', 'Min', 'Max'], '%', 10, 90, ['Blue', 'LightBlue', 'DarkBlue']);
+		drawDailyChart('daily_temp_chart',
+			['tempc', 'mintempc', 'maxtempc'],
+			['Moy', 'Min', 'Max'],
+			'°C'
+		);
+		drawDailyChart('daily_press_chart',
+			['barohpa', 'minbarohpa', 'maxbarohpa'],
+			['Moy', 'Min', 'Max'],
+			'hPa'
+		);
+		drawDailyChart('daily_humid_chart',
+			['humidity', 'minhumidity', 'maxhumidity'],
+			['Moy', 'Min', 'Max'],
+			'%', 10, 90,
+			['Blue', 'LightBlue', 'DarkBlue']
+		);
+		drawDailyChart('daily_indoortemp_chart',
+					['indoortempc', 'minindoortempc', 'maxindoortempc'],
+					['Moy', 'Min', 'Max'],
+					'°C'
+				);
 	}
 
 }); 
