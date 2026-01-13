@@ -44,10 +44,12 @@ use app\controllers\DataPointsController;
         $router->get('/@station_id/daily-press', DataPointsController::class . '->dailypress')->setAlias('data_daily_pressure')->addMiddleware(LoginMiddleware::class);
         $router->get('/@station_id/daily-humid', DataPointsController::class . '->dailyhumid')->setAlias('data_daily_humidity')->addMiddleware(LoginMiddleware::class);
         $router->get('/@station_id/daily-indoortemp', DataPointsController::class . '->dailyindoortemp')->setAlias('data_daily_indoortemp')->addMiddleware(LoginMiddleware::class);
+        $router->get('/@station_id/daily-rain', DataPointsController::class . '->dailyrain')->setAlias('data_daily_rain')->addMiddleware(LoginMiddleware::class);
         $router->get('/@station_id/weekly-temp', DataPointsController::class . '->weeklytemp')->setAlias('data_weekly_temperature')->addMiddleware(LoginMiddleware::class);
         $router->get('/@station_id/weekly-press', DataPointsController::class . '->weeklypress')->setAlias('data_weekly_pressure')->addMiddleware(LoginMiddleware::class);
         $router->get('/@station_id/weekly-humid', DataPointsController::class . '->weeklyhumid')->setAlias('data_weekly_humidity')->addMiddleware(LoginMiddleware::class);
         $router->get('/@station_id/weekly-indoortemp', DataPointsController::class . '->weeklyindoortemp')->setAlias('data_weekly_indoortemp')->addMiddleware(LoginMiddleware::class);
+        $router->get('/@station_id/weekly-rain', DataPointsController::class . '->weeklyrain')->setAlias('data_weekly_rain')->addMiddleware(LoginMiddleware::class);
         
     }, [ SecurityHeadersMiddleware::class]);
     

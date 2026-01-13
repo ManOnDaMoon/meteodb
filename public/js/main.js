@@ -5,7 +5,14 @@
  */
 function drawEvolutionChart(chartId, value, valueName, valueUnit,
 		valueMin = null, valueMax = null, colorScheme = null,
-		xKey = 'hour', xTickFormat = '%Hh') {
+		xKey = null, xTickFormat = null, dataType = null) {
+	
+	// Default values
+	if (xKey == null) {xKey = 'hour'};
+	if (xTickFormat == null) {xTickFormat = '%Hh'};
+	if (dataType == null) {dataType = 'spline'};		
+			
+			
 	dailyGraph = document.getElementById(chartId);
 	if (dailyGraph != null) {
 		fetch(dailyGraph.getAttribute('data-url'), { 
@@ -29,7 +36,7 @@ function drawEvolutionChart(chartId, value, valueName, valueUnit,
 			}
 
 			// Chart type (spline = curved path)
-			chartOptions['data']['type'] = 'spline';
+			chartOptions['data']['type'] = dataType;
 
 			// Axes options
 			chartOptions['data']['axes'] = {};
@@ -126,6 +133,11 @@ function() {
 			['Moy', 'Min', 'Max'],
 			'°C'
 		);
+		drawEvolutionChart('daily_rain_chart',
+			['hourlyrainmm'],
+			['Total'],
+			'mm', /* min */ null, /* max */ null, ['#49AFCD'], null, null, 'bar'
+		);
 		drawEvolutionChart('daily_press_chart',
 			['barohpa', 'minbarohpa', 'maxbarohpa'],
 			['Moy', 'Min', 'Max'],
@@ -134,7 +146,7 @@ function() {
 		drawEvolutionChart('daily_humid_chart',
 			['humidity', 'minhumidity', 'maxhumidity'],
 			['Moy', 'Min', 'Max'],
-			'%', 10, 90,
+			'%', 10, 100,
 			['Blue', 'LightBlue', 'DarkBlue']
 		);
 		drawEvolutionChart('daily_indoortemp_chart',
@@ -151,6 +163,11 @@ function() {
 			['Moy', 'Min', 'Max'],
 			'°C', null, null, null, 'hour', '%d/%m %Hh'
 		);
+		drawEvolutionChart('weekly_rain_chart',
+					['hourlyrainmm'],
+					['Total'],
+					'mm', /* min */ null, /* max */ null, ['#49AFCD'], null, null, 'bar'
+				);
 		drawEvolutionChart('weekly_press_chart',
 			['barohpa', 'minbarohpa', 'maxbarohpa'],
 			['Moy', 'Min', 'Max'],
@@ -159,7 +176,7 @@ function() {
 		drawEvolutionChart('weekly_humid_chart',
 			['humidity', 'minhumidity', 'maxhumidity'],
 			['Moy', 'Min', 'Max'],
-			'%', 10, 90,
+			'%', 10, 100,
 			['Blue', 'LightBlue', 'DarkBlue'], 'hour', '%d/%m %Hh'
 		);
 		drawEvolutionChart('weekly_indoortemp_chart',

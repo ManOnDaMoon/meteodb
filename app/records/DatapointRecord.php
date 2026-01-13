@@ -147,19 +147,19 @@ class DatapointRecord extends \flight\ActiveRecord
         if (isset($record->dewptf)) {
             $record->setCustomData('dewptc', $record->toC($record->dewptf));
         }
-        if (isset($record->dewptf)) {
+        if (isset($record->windspeedmph)) {
             $record->setCustomData('windspeedkmh', $record->toKM($record->windspeedmph));
         }
-        if (isset($record->dewptf)) {
+        if (isset($record->windgustmph)) {
             $record->setCustomData('windgustkmh', $record->toKM($record->windgustmph));
         }
-        if (isset($record->dewptf)) {
+        if (isset($record->winddir)) {
             $record->setCustomData('windcardinal', $record->wind_cardinal($record->winddir));
         }
-        if (isset($record->dewptf)) {
+        if (isset($record->rainin)) {
             $record->setCustomData('rainmm', $record->toMM($record->rainin));
         }
-        if (isset($record->dewptf)) {
+        if (isset($record->dailyrainin)) {
             $record->setCustomData('dailyrainmm', $record->toMM($record->dailyrainin));
         }
         if (isset($record->indoortempf)) {

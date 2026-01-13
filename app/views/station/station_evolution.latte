@@ -28,6 +28,8 @@
 				<div id="chart_container" style="width: 90%; margin: auto; ">
 					<h3>Température extérieure</h3> 
 					<div id="daily_temp_chart" data-url="{route('data_daily_temperature', ['station_id' => $station->station_id])}"></div>
+					<h3>Pluie</h3> 
+					<div id="daily_rain_chart" data-url="{route('data_daily_rain', ['station_id' => $station->station_id])}"></div>
 					<h3>Pression athmosphérique</h3> 
 					<div id="daily_press_chart" data-url="{route('data_daily_pressure', ['station_id' => $station->station_id])}"></div>
 					<h3>Humidité</h3> 
