@@ -14,6 +14,7 @@
 		    	<a href="{route('station_show', ['station_id' => $station->station_id])}" class="button stack" style="text-align: center;">🌡 {$station->currentDataPoint->tempc}°C</a>
 		    	<a href="{route('station_show', ['station_id' => $station->station_id])}" class="button stack" style="text-align: center;">☔ {$station->currentDataPoint->dailyrainmm}mm</a>
 		    	<a href="{route('station_show', ['station_id' => $station->station_id])}" class="button stack" style="text-align: center;">💦 {$station->currentDataPoint->humidity}%</a>
+		    	{if ($username)}<a href="{route('station_show', ['station_id' => $station->station_id])}" class="button stack" style="text-align: center;">🏠 {$station->currentDataPoint->indoortempc}°C</a>{/if}
 		    	<span class="pseudo button stack" style="text-align: center;"><small>{$station->currentDataPoint->dateutc|date:'d/m/Y H\hi'}</small></span>
 		    				    {else}
 			    <p style="text-align: center;"><small>Aucune donnée</small></p>
