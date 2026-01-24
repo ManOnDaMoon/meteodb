@@ -39,7 +39,8 @@ class LoginMiddleware {
             //$AuthTokenRecord->expires = date('Y-m-d\TH:i:s', time() + 864000);
 
             
-            if (hash_equals($AuthTokenRecord->token, hash('sha256', base64_decode($authenticator)))) {
+            if ($AuthTokenRecord->isHydrated()
+                && hash_equals($AuthTokenRecord->token, hash('sha256', base64_decode($authenticator)))) {
                 
                 // Session retrieved. Regenerate.
                 $session->set('user', $AuthTokenRecord->user->username);

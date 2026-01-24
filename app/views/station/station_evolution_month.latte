@@ -18,26 +18,26 @@
 	<div class="tabs one">
 		<input id='tab-day' type='radio' name='tabgroupB' />
 		<label for='tab-day'><a class="pseudo button toggle" href="{route('station_evolution', ['station_id' => $station->station_id])}">Jour</a></label>
+		<input id='tab-week' type='radio' name='tabgroupB'/>
+		<label for='tab-week'><a class="pseudo button toggle" href="{route('station_evolution_week', ['station_id' => $station->station_id])}">Semaine</a></label>
 		<input id='tab-week' type='radio' name='tabgroupB' checked/>
-		<label class="pseudo button toggle" for="tab-week">Semaine</label>
-		<input id='tab-month' type='radio' name='tabgroupB'/>
-		<label for='tab-month'><a class="pseudo button toggle" href="{route('station_evolution_month', ['station_id' => $station->station_id])}">Mois</a></label>
+		<label class="pseudo button toggle" for="tab-week">Mois</label>
 		<input id='tab-show' type='radio' name='tabgroubB'>
 		<label for='tab-show'><a class="pseudo button toggle" href="{route('station_show', ['station_id' => $station->station_id])}">Retour</a></label>
 		<div class="row">
 			<div>
-				<h2>Semaine</h2>
-				<div id="weekly_chart_container" style="width: 90%; margin: auto; ">
+				<h2>Mois</h2>
+				<div id="monthly_chart_container" style="width: 90%; margin: auto; ">
 					<h3>Température extérieure</h3> 
-					<div id="weekly_temp_chart" data-url="{route('data_weekly_temperature', ['station_id' => $station->station_id])}"></div>
+					<div id="monthly_temp_chart" data-url="{route('data_monthly_temperature', ['station_id' => $station->station_id])}"></div>
 					<h3>Pluie</h3> 
-					<div id="weekly_rain_chart" data-url="{route('data_weekly_rain', ['station_id' => $station->station_id])}"></div>
+					<div id="monthly_rain_chart" data-url="{route('data_monthly_rain', ['station_id' => $station->station_id])}"></div>
 					<h3>Pression athmosphérique</h3> 
-					<div id="weekly_press_chart" data-url="{route('data_weekly_pressure', ['station_id' => $station->station_id])}"></div>
+					<div id="monthly_press_chart" data-url="{route('data_monthly_pressure', ['station_id' => $station->station_id])}"></div>
 					<h3>Humidité</h3> 
-					<div id="weekly_humid_chart" data-url="{route('data_weekly_humidity', ['station_id' => $station->station_id])}"></div>
+					<div id="monthly_humid_chart" data-url="{route('data_monthly_humidity', ['station_id' => $station->station_id])}"></div>
 					<h3>Température intérieure</h3> 
-					<div id="weekly_indoortemp_chart" data-url="{route('data_weekly_indoortemp', ['station_id' => $station->station_id])}"></div>
+					<div id="monthly_indoortemp_chart" data-url="{route('data_monthly_indoortemp', ['station_id' => $station->station_id])}"></div>
 				</div>
 			</div>
 		</div>
