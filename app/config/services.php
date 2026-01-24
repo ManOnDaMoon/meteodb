@@ -87,9 +87,9 @@ $app->map('render', function(string $templatePath, array $data = [], ?string $bl
         'error_message' => $app->session()->getFlashOrDefault('error_message'),
         'nonce' => $app->get('csp_nonce'),
         'pwa' => [
-            'enable' => $app->get('pwa.enable'),
-            'app_name' => $app->get('pwa.app_name'),
-            'app_short_name' => $app->get('pwa.app_short_name')
+            'enable' => $app->get('meteodb.pwa.enable'),
+            'app_name' => $app->get('meteodb.pwa.app_name'),
+            'app_short_name' => $app->get('meteodb.pwa.app_short_name')
         ]
     ];
     $app->session()->commit(); // Mandatory to remove flash message
@@ -122,4 +122,6 @@ $app->register('session', \Ghostff\Session\Session::class, [
 if (Debugger::$showBar === true && php_sapi_name() !== 'cli') {
     (new TracyExtensionLoader($app, [ 'session_data' => $app->session()->getAll()])); // Load FlightPHP Tracy extensions
 }
+
+$app->register('cookie', \Overclokk\Cookie\Cookie::class);
 

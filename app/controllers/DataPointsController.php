@@ -190,7 +190,7 @@ class DataPointsController extends BaseController
                     $record['hourlyrainmm'] = $record['dailyrainmm'];
                     continue;
                 }
-                $record['hourlyrainmm'] = $record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'];
+                $record['hourlyrainmm'] = round($record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'], 1);
             }
             
             $this->app->json($result);
@@ -220,7 +220,7 @@ class DataPointsController extends BaseController
                     $record['hourlyrainmm'] = $record['dailyrainmm'];
                     continue;
                 }
-                $record['hourlyrainmm'] = $record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'];
+                $record['hourlyrainmm'] = round($record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'], 1) ;
             }
             
             $this->app->json($result);

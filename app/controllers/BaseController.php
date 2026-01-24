@@ -10,6 +10,7 @@ use flight\net\Request;
 use flight\net\Response;
 use Ghostff\Session\Session;
 use flight\database\PdoWrapper;
+use Overclokk\Cookie\Cookie;
 
 /**
  * These help with IDE autocompletion and type hinting if you
@@ -19,6 +20,7 @@ use flight\database\PdoWrapper;
  * @method Response response()
  * @method Session session()
  * @method PdoWrapper db()
+ * @method Cookie cookie()
  * @method string getUrl(string $route, array $params = [])
  * @method void render(string $template, array $data = [])
  * @method void redirect(string $url)

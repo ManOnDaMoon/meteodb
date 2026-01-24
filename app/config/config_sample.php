@@ -58,8 +58,10 @@ $app->set('flight.views.extension', '.latte');  // View file extension (e.g., '.
 $app->set('flight.content_length', false);    // Send content length header. Usually false unless required by proxy
 
 // Custom config variables
-$app->set('manifest.app_name', '');
-$app->set('manifest.app_short_name', '');
+$app->set('meteodb.pwa.enable', true);
+$app->set('meteodb.pwa.app_name', 'Meteo Dashboard');
+$app->set('meteodb.pwa.app_short_name', 'MeteoDB');
+$app->set('meteodb.domain', 'localhost');
 
 // Generate a CSP nonce for each request and store in $app
 $nonce = bin2hex(random_bytes(16));

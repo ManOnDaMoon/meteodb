@@ -56,6 +56,17 @@ class InstallController extends BaseController
         ) ENGINE = InnoDB;
         ";
         
+        $sqlAuthTokens = "
+        CREATE TABLE IF NOT EXISTS `auth_tokens` (
+            `id` int(11) UNSIGNED not null AUTO_INCREMENT,
+            `selector` char(12),
+            `token` char(64),
+            `userid` int(11) UNSIGNED not null,
+            `expires` datetime,
+            PRIMARY KEY (`id`)
+        ) ENGINE = InnoDB;
+        ";
+        
         $sqlTestInstall = "SELECT * FROM users";
         $notInstalled = false;
         try {
@@ -64,11 +75,12 @@ class InstallController extends BaseController
             $notInstalled = ($this->db()->errorCode() == '42S02');
         }
         
+        $this->db()->query($sqlDataPointsTable);
+        $this->db()->query($sqlStationsTable);
+        $this->db()->query($sqlUsersTable);
+        $this->db()->query($sqlAuthTokens);
+        
         if ($notInstalled) {
-            $this->db()->query($sqlDataPointsTable);
-            $this->db()->query($sqlStationsTable);
-            $this->db()->query($sqlUsersTable);
-
             $UserRecord = new UserRecord($this->db());
             $UserRecord->id = 1;
             $UserRecord->username = 'admin';
@@ -76,7 +88,7 @@ class InstallController extends BaseController
             $UserRecord->save();
             $result = "Installation effectuée.";
         } else {
-            $result = "Installation déjà effectuée.";
+            $result = "Installation mise à jour.";
         }
         
         $this->app->render('install.latte', ['result' => $result]);

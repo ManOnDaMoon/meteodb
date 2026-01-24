@@ -180,11 +180,64 @@ class StationController extends BaseController
             $StationRecord->currentDataPoint = null;
         }
         
+//         $SummaryDataRecord = new DatapointRecord($this->app->db());
+//         $SummaryDataRecord-select('sum(dailyrainin) as dailyrainin')
+//             ->equal('station_id', $StationRecord->station_id)->order('dateutc DESC')->find();
+        
         if ($StationRecord->isHydrated()){
-            
-            $template = 'station/' . $this->app->router()->current()->alias . '.latte';
-            
-            $this->app->render($template, [
+            $this->app->render('station/station_evolution.latte', [
+                'page_title' => 'Evolution',
+                'station' => $StationRecord
+            ]);
+        }
+    }
+    
+    /**
+     * Show evolution graphs
+     *
+     * @return void
+     */
+    public function evolution_week(string $station_id):void
+    {
+        $StationRecord = new StationRecord($this->app->db());
+        $StationRecord->find($station_id);
+        
+        $DataPointRecord = new DatapointRecord($this->app->db());
+        $DataPointRecord->equal('station_id', $StationRecord->station_id)->order('dateutc DESC')->find();
+        if ($DataPointRecord->isHydrated()) {
+            $StationRecord->currentDataPoint = $DataPointRecord;
+        } else {
+            $StationRecord->currentDataPoint = null;
+        }
+        
+        if ($StationRecord->isHydrated()){
+            $this->app->render('station/station_evolution_week.latte', [
+                'page_title' => 'Evolution',
+                'station' => $StationRecord
+            ]);
+        }
+    }
+    
+    /**
+     * Show evolution graphs
+     *
+     * @return void
+     */
+    public function evolution_month(string $station_id):void
+    {
+        $StationRecord = new StationRecord($this->app->db());
+        $StationRecord->find($station_id);
+        
+        $DataPointRecord = new DatapointRecord($this->app->db());
+        $DataPointRecord->equal('station_id', $StationRecord->station_id)->order('dateutc DESC')->find();
+        if ($DataPointRecord->isHydrated()) {
+            $StationRecord->currentDataPoint = $DataPointRecord;
+        } else {
+            $StationRecord->currentDataPoint = null;
+        }
+        
+        if ($StationRecord->isHydrated()){
+            $this->app->render('station/sataion_evolution_month.latte', [
                 'page_title' => 'Evolution',
                 'station' => $StationRecord
             ]);

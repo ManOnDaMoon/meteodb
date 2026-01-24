@@ -5,23 +5,25 @@ declare(strict_types=1);
 namespace app\records;
 
 /**
- * ActiveRecord class for the users table.
+ * ActiveRecord class for the auth_tokens table.
  * @link https://docs.flightphp.com/awesome-plugins/active-record
  *
  * @property int $id
- * @property string $username
- * @property string $password
+ * @property string $selector
+ * @property string $token
+ * @property int $userid
+ * @property string $expires
  */
-class UserRecord extends \flight\ActiveRecord
+class AuthTokenRecord extends \flight\ActiveRecord
 {
     /**
      * @var array $relations Set the relationships for the model
      *   https://docs.flightphp.com/awesome-plugins/active-record#relationships
      */
     protected array $relations = [
-        'auth_token' => [
-            self::HAS_MANY,
-            AuthTokenRecord::class,
+        'user' => [
+            self::BELONGS_TO,
+            UserRecord::class,
             'userid'
         ]
     ];
@@ -32,6 +34,6 @@ class UserRecord extends \flight\ActiveRecord
      */
     public function __construct($databaseConnection)
     {
-        parent::__construct($databaseConnection, 'users');
+        parent::__construct($databaseConnection, 'auth_tokens');
     }
 }

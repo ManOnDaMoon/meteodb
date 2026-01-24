@@ -84,6 +84,18 @@ function drawEvolutionChart(chartId, value, valueName, valueUnit,
 			chartOptions['tooltip'] = {};
 			chartOptions['tooltip']['format'] = {};
 			chartOptions['tooltip']['format']['value'] = (function (v) { return v + valueUnit; });
+			chartOptions['tooltip']['format']['title'] = (function (x, index) {
+				console.log(x);
+				temp = new Date(x);
+				console.log(temp);
+				return temp.getDate() 
+					+ '/' 
+					+ (temp.getMonth() < 9 ? '0' : '') 
+					+ (temp.getMonth() + 1)
+					+ ' ' 
+					+ (temp.getHours() < 10 ? '0' : '') 
+					+ temp.getHours() + 'h';
+			});
 			
 			// Tooltip shown on hover
 			chartOptions['line'] = {};

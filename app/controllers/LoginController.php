@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace app\controllers;
 
 use app\records\UserRecord;
-use Tracy\Debugger;
-use Ghostff;
-use Ghostff\Session\Session;
-use http\Cookie;
+use app\records\AuthTokenRecord;
 
 class LoginController extends BaseController
 {
@@ -42,7 +39,26 @@ class LoginController extends BaseController
         } 
         
         if ($postData->rememberme == 'on') {
-            //TODO
+            $selector = base64_encode(random_bytes(9));
+            $authenticator = random_bytes(33);
+            
+            $cookie = $this->app->cookie();
+            $cookie->set(
+                'meteodb_remember',
+                $selector.':'.base64_encode($authenticator),
+                864000, // 10j
+                '/',
+                $this->app->get('meteodb.domain'),
+                false,
+                true
+                );
+            
+            $AuthTokenRecord = new AuthTokenRecord($this->app->db());
+            $AuthTokenRecord->selector = $selector;
+            $AuthTokenRecord->token = hash('sha256', $authenticator);
+            $AuthTokenRecord->userid = $UserRecord->id;
+            $AuthTokenRecord->expires = date('Y-m-d\TH:i:s', time() + 864000);
+            $AuthTokenRecord->save();
         }
         
         $session->set('user', $user->username);

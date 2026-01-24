@@ -24,6 +24,7 @@
 		"flightphp/runway": "^1.2",
 		"ghostff/session": "dev-master",
 		"latte/latte": "^3.1",
+		"overclokk/cookie": "dev-master",
 		"tracy/tracy": "^2.9"
 	},
 	"config" : {
