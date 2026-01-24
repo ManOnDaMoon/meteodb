@@ -136,7 +136,7 @@ function refreshButtonSetTimeout(refreshButtonId, timeout) {
 document.addEventListener(
 "DOMContentLoaded",
 function() {
-	refreshButtonSetTimeout('refresh', 6000);
+	refreshButtonSetTimeout('refresh', 60000);
 	
 	chartContainer = document.getElementById('chart_container');
 	if (chartContainer != null) {

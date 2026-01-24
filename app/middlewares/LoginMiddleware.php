@@ -74,7 +74,7 @@ class LoginMiddleware {
        // Check session again. Redirect only if not on home page
        if ($session->exist('user') === false
            && $this->app->router()->executedRoute->alias != 'home') {
-           $this->app->redirect($this->app->getUrl('login'));
+           $this->app->redirect($this->app->getUrl('login'), 401);
        }
            
             

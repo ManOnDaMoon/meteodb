@@ -35,6 +35,6 @@ class SecurityHeadersMiddleware
 		$this->app->response()->header('Permissions-Policy', 'geolocation=()');
 		
 		//Cache control:
-		$this->app->response()->header('Cache-Control', 'no-store, no-cache, must-revalidate');
+		$this->app->response()->header('Cache-Control', 'private');
 	}
 }
