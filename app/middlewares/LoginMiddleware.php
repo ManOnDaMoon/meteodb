@@ -60,8 +60,8 @@ class LoginMiddleware {
                     $selector.':'.base64_encode($authenticator),
                     864000, // 10j
                     '/', // Path
-                    $this->app->get('meteodb.domain'), // Domain
-                    true, // HTTPS
+                    '',
+                    false,
                     true // HTTP-Only
                     );
                 

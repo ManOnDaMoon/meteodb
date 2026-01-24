@@ -61,7 +61,6 @@ $app->set('flight.content_length', false);    // Send content length header. Usu
 $app->set('meteodb.pwa.enable', true);
 $app->set('meteodb.pwa.app_name', 'Meteo Dashboard');
 $app->set('meteodb.pwa.app_short_name', 'MeteoDB');
-$app->set('meteodb.domain', 'localhost');
 
 // Generate a CSP nonce for each request and store in $app
 $nonce = bin2hex(random_bytes(16));

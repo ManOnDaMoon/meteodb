@@ -37,7 +37,7 @@ class LoginController extends BaseController
             $this->redirect($this->getUrl('login'));
             return;
         } 
-        
+
         if ($postData->rememberme == 'on') {
             $selector = base64_encode(random_bytes(9));
             $authenticator = random_bytes(33);
@@ -48,8 +48,8 @@ class LoginController extends BaseController
                 $selector.':'.base64_encode($authenticator),
                 864000, // 10j
                 '/',
-                $this->app->get('meteodb.domain'),
-                true, // HTTPS Only
+                '',
+                false,
                 true
                 );
             
