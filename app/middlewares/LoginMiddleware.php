@@ -7,6 +7,7 @@ namespace app\middlewares;
 use app\records\AuthTokenRecord;
 use flight\Engine;
 use Ghostff\Session\Session;
+use Overclokk\Cookie\Cookie;
 
 class LoginMiddleware {
 
@@ -20,6 +21,7 @@ class LoginMiddleware {
 
     public function before(): void
     {   
+        /** @var Cookie $cookie */
         $cookie = $this->app->cookie();
         /** @var Session $session */
         $session = $this->app->session();
@@ -57,10 +59,10 @@ class LoginMiddleware {
                     'meteodb_remember',
                     $selector.':'.base64_encode($authenticator),
                     864000, // 10j
-                    '/',
-                    $this->app->get('meteodb.domain'),
-                    false,
-                    true
+                    '/', // Path
+                    $this->app->get('meteodb.domain'), // Domain
+                    true, // HTTPS
+                    true // HTTP-Only
                     );
                 
                 $AuthTokenRecord->selector = $selector;

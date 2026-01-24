@@ -20,7 +20,7 @@ class LogoutController extends BaseController
             -3600,
             '/',
             $this->app->get('meteodb.domain'),
-            false,
+            true,
             true
             );
         $this->redirect($this->getUrl('home'));

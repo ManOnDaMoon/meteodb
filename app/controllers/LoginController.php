@@ -49,7 +49,7 @@ class LoginController extends BaseController
                 864000, // 10j
                 '/',
                 $this->app->get('meteodb.domain'),
-                false,
+                true, // HTTPS Only
                 true
                 );
             
