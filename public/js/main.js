@@ -197,5 +197,35 @@ function() {
 			'°C', null, null, null, 'hour', '%d/%m %Hh'
 		);
 	}
+	
+	chartContainer = document.getElementById('monthly_chart_container');
+		if (chartContainer != null) {
+			drawEvolutionChart('monthly_temp_chart',
+				['tempc', 'mintempc', 'maxtempc'],
+				['Moy', 'Min', 'Max'],
+				'°C', null, null, null, 'hour', '%d/%m'
+			);
+			drawEvolutionChart('monthly_rain_chart',
+						['hourlyrainmm'],
+						['Total'],
+						'mm', /* min */ null, /* max */ null, ['#49AFCD'], null, null, 'bar'
+					);
+			drawEvolutionChart('monthly_press_chart',
+				['barohpa', 'minbarohpa', 'maxbarohpa'],
+				['Moy', 'Min', 'Max'],
+				'hPa', null, null, null, 'hour', '%d/%m %Hh'
+			);
+			drawEvolutionChart('monthly_humid_chart',
+				['humidity', 'minhumidity', 'maxhumidity'],
+				['Moy', 'Min', 'Max'],
+				'%', 10, 100,
+				['Blue', 'LightBlue', 'DarkBlue'], 'hour', '%d/%m %Hh'
+			);
+			drawEvolutionChart('monthly_indoortemp_chart',
+				['indoortempc', 'minindoortempc', 'maxindoortempc'],
+				['Moy', 'Min', 'Max'],
+				'°C', null, null, null, 'hour', '%d/%m %Hh'
+			);
+		}
 
 }); 
