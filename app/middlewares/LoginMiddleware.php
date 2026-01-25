@@ -65,7 +65,7 @@ class LoginMiddleware {
                 // Take some time to delete old expired tokens
                 $OldAuthTokens = new AuthTokenRecord($this->app->db());
                 $OldTokens = $OldAuthTokens
-                    ->lt('expires', date('Y-m-d H:i:s', $this->app->request()->getVar('REQUEST_TIME')))
+                    ->lt('expires', date('Y-m-d H:i:s', time()))
                     ->findAll();
                 foreach ($OldTokens as $OldToken) {
                     $OldToken->delete();
