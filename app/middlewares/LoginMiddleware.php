@@ -30,15 +30,11 @@ class LoginMiddleware {
         
         if (($session->exist('user') === false)
             && ($remember !== null)) {
-
             // Session does not exist but cookie detected
             
             list($selector, $authenticator) = explode(':', $remember);
             $AuthTokenRecord = new AuthTokenRecord($this->app->db());
             $AuthTokenRecord->with('user')->eq('selector', $selector)->find();
-            
-            // Check AuthTokenExpiry
-            //$AuthTokenRecord->expires = date('Y-m-d\TH:i:s', time() + 864000);
 
             
             if ($AuthTokenRecord->isHydrated()
@@ -49,10 +45,7 @@ class LoginMiddleware {
                 $session->set('user_id', $AuthTokenRecord->id);
                 $session->commit();
                 
-                // Delete expired auth_tokens
-                
-                
-                // Then regenerate login token as above
+                // Then regenerate new selector and update existing token
                 $selector = base64_encode(random_bytes(9));
                 $authenticator = random_bytes(33);
                 $cookie->set(
@@ -60,14 +53,23 @@ class LoginMiddleware {
                     $selector.':'.base64_encode($authenticator),
                     864000, // 10j
                     '/', // Path
-                    '',
-                    false,
+                    '', // Domain
+                    false, // Secure
                     true // HTTP-Only
                     );
                 
                 $AuthTokenRecord->selector = $selector;
                 $AuthTokenRecord->token = hash('sha256', $authenticator);
-                $AuthTokenRecord->save();
+                $AuthTokenRecord->save(); // Update existing
+                
+                // Take some time to delete old expired tokens
+                $OldAuthTokens = new AuthTokenRecord($this->app->db());
+                $OldTokens = $OldAuthTokens
+                    ->lt('expires', date('Y-m-d H:i:s', $this->app->request()->getVar('REQUEST_TIME')))
+                    ->findAll();
+                foreach ($OldTokens as $OldToken) {
+                    $OldToken->delete();
+                }
             }
        }
        
