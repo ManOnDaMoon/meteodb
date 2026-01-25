@@ -20,7 +20,14 @@ class StationRecord extends \flight\ActiveRecord
      * @var array $relations Set the relationships for the model
      *   https://docs.flightphp.com/awesome-plugins/active-record#relationships
      */
-    protected array $relations = [];
+    protected array $relations = [
+        'currentDataPoint' => [
+            self::HAS_ONE,
+            DatapointRecord::class,
+            'station_id',
+            [ 'order' => ['dateutc DESC'], 'limit'=> 1 ]
+        ]
+    ];
 
     /**
      * Constructor
