@@ -42,7 +42,7 @@ class LoginMiddleware {
                 
                 // Session retrieved. Regenerate.
                 $session->set('user', $AuthTokenRecord->user->username);
-                $session->set('user_id', $AuthTokenRecord->id);
+                $session->set('user_id', $AuthTokenRecord->user->id);
                 $session->commit();
                 
                 // Then regenerate new selector and update existing token
