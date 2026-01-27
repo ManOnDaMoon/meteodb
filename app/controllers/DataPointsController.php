@@ -260,19 +260,22 @@ class DataPointsController extends BaseController
             foreach ($data as $dataRecord) {
                 $result[] = $dataRecord->toArray();
             }
+            $total = 0.0;
             foreach($result as $index => &$record) {
-                if ($index == 0) {
+                if ($index == 0 || $record['short_hour'] == '00') {
                     $record['hourlyrainmm'] = $record['dailyrainmm'];
-                    continue;
+                } else {
+                    $record['hourlyrainmm'] = round($record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'], 1);
                 }
-                if ($record['short_hour'] == '00') {
-                    $record['hourlyrainmm'] = $record['dailyrainmm'];
-                    continue;
-                }
-                $record['hourlyrainmm'] = round($record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'], 1);
+                $total += $record['hourlyrainmm'];
             }
             
-            $this->app->json($result);
+            $response = [
+                "chartData" => $result,
+                "sumData" => round($total, 1)
+            ];
+            
+            $this->app->json($response);
     }
     
     public function weeklyrain(string $station_id):void
@@ -290,19 +293,22 @@ class DataPointsController extends BaseController
             foreach ($data as $dataRecord) {
                 $result[] = $dataRecord->toArray();
             }
+            $total = 0.0;
             foreach($result as $index => &$record) {
-                if ($index == 0) {
+                if ($index == 0 || $record['short_hour'] == '00') {
                     $record['hourlyrainmm'] = $record['dailyrainmm'];
-                    continue;
+                } else {
+                    $record['hourlyrainmm'] = round($record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'], 1);
                 }
-                if ($record['short_hour'] == '00') {
-                    $record['hourlyrainmm'] = $record['dailyrainmm'];
-                    continue;
-                }
-                $record['hourlyrainmm'] = round($record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'], 1) ;
+                $total += $record['hourlyrainmm'];
             }
+                
+            $response = [
+                "chartData" => $result,
+                "sumData" => round($total, 1)
+            ];
             
-            $this->app->json($result);
+            $this->app->json($response);
     }
     
     public function monthlyrain(string $station_id):void
@@ -320,18 +326,21 @@ class DataPointsController extends BaseController
             foreach ($data as $dataRecord) {
                 $result[] = $dataRecord->toArray();
             }
+            $total = 0.0;
             foreach($result as $index => &$record) {
-                if ($index == 0) {
+                if ($index == 0 || $record['short_hour'] == '00') {
                     $record['hourlyrainmm'] = $record['dailyrainmm'];
-                    continue;
+                } else {
+                    $record['hourlyrainmm'] = round($record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'], 1);
                 }
-                if ($record['short_hour'] == '00') {
-                    $record['hourlyrainmm'] = $record['dailyrainmm'];
-                    continue;
-                }
-                $record['hourlyrainmm'] = round($record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'], 1) ;
+                $total += $record['hourlyrainmm'];
             }
             
-            $this->app->json($result);
+            $response = [
+                "chartData" => $result,
+                "sumData" => round($total, 1)
+            ];
+            
+            $this->app->json($response);
     }
 }

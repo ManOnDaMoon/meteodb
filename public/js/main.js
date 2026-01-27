@@ -13,13 +13,18 @@ function drawEvolutionChart(chartId, value, valueName, valueUnit,
 	if (dataType == null) {dataType = 'spline'};		
 			
 			
-	dailyGraph = document.getElementById(chartId);
+	var dailyGraph = document.getElementById(chartId);
 	if (dailyGraph != null) {
 		fetch(dailyGraph.getAttribute('data-url'), { 
 		  method: 'GET'
 		})
 		.then(function(response) { return response.json(); })
 		.then(function(jsonData) {
+			if (jsonData.chartData != null) {
+				totalFieldId = dailyGraph.getAttribute('data-total-field');
+				document.getElementById(totalFieldId).textContent = jsonData.sumData + "mm";
+				jsonData = jsonData.chartData;
+			}
 			chartOptions = {};
 			// Data options
 			chartOptions['data'] = {};
@@ -85,9 +90,7 @@ function drawEvolutionChart(chartId, value, valueName, valueUnit,
 			chartOptions['tooltip']['format'] = {};
 			chartOptions['tooltip']['format']['value'] = (function (v) { return v + valueUnit; });
 			chartOptions['tooltip']['format']['title'] = (function (x, index) {
-				console.log(x);
 				temp = new Date(x);
-				console.log(temp);
 				return temp.getDate() 
 					+ '/' 
 					+ (temp.getMonth() < 9 ? '0' : '') 

@@ -30,8 +30,14 @@
 				<div id="monthly_chart_container" style="width: 90%; margin: auto; ">
 					<h3>Température extérieure</h3> 
 					<div id="monthly_temp_chart" data-url="{route('data_monthly_temperature', ['station_id' => $station->station_id])}"></div>
-					<h3>Pluie</h3> 
-					<div id="monthly_rain_chart" data-url="{route('data_monthly_rain', ['station_id' => $station->station_id])}"></div>
+					<h3>Pluie</h3>
+					<div>
+					<article class="card">
+						<header style="text-align: center;"><strong>Total</strong></header>
+						<span class="label pseudo" style="margin: 0;"><h1 id="monthly-rain-total"></h1></span>
+					</article>
+					</div> 
+					<div id="monthly_rain_chart" data-total-field="monthly-rain-total" data-url="{route('data_monthly_rain', ['station_id' => $station->station_id])}"></div>
 					<h3>Pression athmosphérique</h3> 
 					<div id="monthly_press_chart" data-url="{route('data_monthly_pressure', ['station_id' => $station->station_id])}"></div>
 					<h3>Humidité</h3> 
