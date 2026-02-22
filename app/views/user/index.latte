@@ -43,7 +43,10 @@
     <tr>
       <td>{$user->username}</td>
       <td>
+      	{if ($user_id == $user->id || $user_id == '1')}
       	<a href="{route('user_edit', ['id' => $user->id])}" class="button">Modifier</a>
+      	{/if}
+      	{if ($user_id == '1')}
       	<label for="modal_{$user->id}" class="button warning">Supprimer</label>
 		<div class="modal">
 		  <input id="modal_{$user->id}" type="checkbox" />
@@ -64,6 +67,7 @@
 		    </footer>
 		  </article>
 		</div>
+		{/if}
       </td>
     </tr>
 	{/foreach}

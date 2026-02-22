@@ -262,7 +262,7 @@ class DataPointsController extends BaseController
             }
             $total = 0.0;
             foreach($result as $index => &$record) {
-                if ($index == 0 || $record['short_hour'] == '00') {
+                if ($index == 0 || $record['short_hour'] == '00' || $result[$index - 1]['dailyrainmm'] < $record['dailyrainmm']) {
                     $record['hourlyrainmm'] = $record['dailyrainmm'];
                 } else {
                     $record['hourlyrainmm'] = round($record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'], 1);
@@ -295,7 +295,7 @@ class DataPointsController extends BaseController
             }
             $total = 0.0;
             foreach($result as $index => &$record) {
-                if ($index == 0 || $record['short_hour'] == '00') {
+                if ($index == 0 || $record['short_hour'] == '00' || $record['dailyrainmm'] < $result[$index - 1]['dailyrainmm']) {
                     $record['hourlyrainmm'] = $record['dailyrainmm'];
                 } else {
                     $record['hourlyrainmm'] = round($record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'], 1);
@@ -328,7 +328,7 @@ class DataPointsController extends BaseController
             }
             $total = 0.0;
             foreach($result as $index => &$record) {
-                if ($index == 0 || $record['short_hour'] == '00') {
+                if ($index == 0 || $record['short_hour'] == '00' || $record['dailyrainmm'] < $result[$index - 1]['dailyrainmm']) {
                     $record['hourlyrainmm'] = $record['dailyrainmm'];
                 } else {
                     $record['hourlyrainmm'] = round($record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'], 1);

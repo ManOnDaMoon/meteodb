@@ -135,7 +135,7 @@
 
 
 
-{if ($username)}
+{if ($user_id == '1')}
 	<a class="button" href="{route('station_edit', [ 'station_id' => $station->station_id ])}">Modifier</a>
 	
 	<label for="modal_1" class="button warning">Supprimer</label>

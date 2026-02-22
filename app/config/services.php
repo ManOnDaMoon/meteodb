@@ -83,6 +83,7 @@ $Latte->addFunction('route', function(string $alias, array $params = []) use ($a
 $app->map('render', function(string $templatePath, array $data = [], ?string $block = null) use ($app, $Latte) {
     // Add the username that's available in every template.
     $data += [
+        'user_id' => $app->session()->getOrDefault('user_id', ''),
         'username' => $app->session()->getOrDefault('user', ''),
         'error_message' => $app->session()->getFlashOrDefault('error_message'),
         'nonce' => $app->get('csp_nonce'),
