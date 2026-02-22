@@ -193,6 +193,7 @@ class DatapointRecord extends \flight\ActiveRecord
         $StationRecord = new StationRecord($this->databaseConnection);
         $StationRecord->find($this->station_id);
         $StationRecord->last_update = $this->dateutc;
+        $StationRecord->last_datapoint = $this->id;
         $StationRecord->save();
     }
 }

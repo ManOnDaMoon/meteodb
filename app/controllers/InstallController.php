@@ -43,7 +43,8 @@ class InstallController extends BaseController
             `description` VARCHAR(256) ,
             `position` POINT ,
             `key` VARCHAR(60) NOT NULL,
-            `last_update` DATETIME
+            `last_update` DATETIME,
+            `last_datapoint` INT UNSIGNED NOT NULL
         ) ENGINE = InnoDB;
         ";
         

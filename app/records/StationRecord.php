@@ -13,6 +13,7 @@ namespace app\records;
  * @property int $position
  * @property string $key
  * @property string $last_update
+ * @property int $last_datapoint
  */
 class StationRecord extends \flight\ActiveRecord
 {
@@ -22,10 +23,9 @@ class StationRecord extends \flight\ActiveRecord
      */
     protected array $relations = [
         'currentDataPoint' => [
-            self::HAS_ONE,
+            self::BELONGS_TO,
             DatapointRecord::class,
-            'station_id',
-            [ 'order' => ['dateutc DESC'], 'limit'=> 1 ]
+            'last_datapoint'
         ]
     ];
 
@@ -36,6 +36,6 @@ class StationRecord extends \flight\ActiveRecord
     public function __construct($databaseConnection)
     {
         parent::__construct($databaseConnection, 'stations');
-        $this->primaryKey = 'station_id';
+        $this->primaryKey = 'station_id';   
     }
 }
