@@ -23,6 +23,7 @@ use app\controllers\DataPointsController;
         $router->post('/login', \app\controllers\LoginController::class . '->authenticate')->setAlias('login_authenticate');;
         $router->get('/logout', \app\controllers\LogoutController::class . '->index')->setAlias('logout');;
         $router->get('/manifest.webmanifest', \app\controllers\PWAController::class . '->pwa');
+        $router->get('/station/@station_id/manifest.webmanifest', \app\controllers\PWAController::class . '->stationpwa');
     }, [ SecurityHeadersMiddleware::class]);
 	
     // Station
