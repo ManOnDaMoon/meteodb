@@ -22,8 +22,8 @@ use app\controllers\DataPointsController;
         $router->get('/login', \app\controllers\LoginController::class . '->index')->setAlias('login');;
         $router->post('/login', \app\controllers\LoginController::class . '->authenticate')->setAlias('login_authenticate');;
         $router->get('/logout', \app\controllers\LogoutController::class . '->index')->setAlias('logout');;
-        $router->get('/manifest.webmanifest', \app\controllers\PWAController::class . '->pwa');
-        $router->get('/station/@station_id/manifest.webmanifest', \app\controllers\PWAController::class . '->stationpwa');
+        $router->get('/manifest.webmanifest', \app\controllers\PWAController::class . '->pwa')->setAlias('pwa');
+        $router->get('/station/@station_id/manifest.webmanifest', \app\controllers\PWAController::class . '->stationpwa')->setAlias('stationpwa');
     }, [ SecurityHeadersMiddleware::class]);
 	
     // Station

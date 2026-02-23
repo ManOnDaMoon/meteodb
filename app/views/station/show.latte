@@ -2,6 +2,10 @@
 
 {block headscript}
 		<script src="/public/js/main.js" nonce="{$nonce}"></script>
+        {if ($pwa['enable'])}
+        	<link rel="apple-touch-icon" href="/public/img/apple-touch-icon.png">
+        	<link rel="manifest" href="{route('stationpwa', ['station_id' => $station->station_id])}">
+        {/if}
 {/block}
 
 {block content}
