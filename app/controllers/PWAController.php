@@ -37,7 +37,7 @@ class PWAController extends BaseController
                 "name" => $StationRecord->description . ' - ' . $this->app->get('meteodb.pwa.app_name'),
                 "short_name" => $StationRecord->description . ' - ' . $this->app->get('meteodb.pwa.app_short_name'),
                 "display" => "standalone",
-                "scope" => $this->app->getUrl('station', [ 'station_id' => $station_id]),
+                "scope" => "/",
                 "start_url" => $this->app->getUrl('station', [ 'station_id' => $station_id])
             ];
             
