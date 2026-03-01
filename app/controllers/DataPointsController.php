@@ -253,7 +253,7 @@ class DataPointsController extends BaseController
             date_format(dateutc, \'%H\') as short_hour,
             max(dailyrainin) as dailyrainin')
             ->eq('station_id', $station_id)
-            ->gte('dateutc', date('Y-m-d H:i:s', time() - 86400))
+            ->gte('dateutc', date('Y-m-d H:i:s', time() - 90000)) // Fetch previous 25hrs to get correct evolution
             ->groupBy('hour', 'short_hour')
             ->findAll();
             $result = [];
@@ -262,14 +262,17 @@ class DataPointsController extends BaseController
             }
             $total = 0.0;
             foreach($result as $index => &$record) {
-                if ($index == 0 || $record['short_hour'] == '00' || $result[$index - 1]['dailyrainmm'] < $record['dailyrainmm']) {
+                if ($index == 0) {
+                    continue;
+                }
+                if ($record['short_hour'] == '00' || $result[$index - 1]['dailyrainmm'] < $record['dailyrainmm']) {
                     $record['hourlyrainmm'] = $record['dailyrainmm'];
                 } else {
                     $record['hourlyrainmm'] = round($record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'], 1);
                 }
                 $total += $record['hourlyrainmm'];
             }
-            
+            array_shift($result); // Remove first value only used to compute evolution
             $response = [
                 "chartData" => $result,
                 "sumData" => round($total, 1)
@@ -286,7 +289,7 @@ class DataPointsController extends BaseController
             date_format(DATE(dateutc) + INTERVAL (HOUR(dateutc) - MOD (HOUR(dateutc), 6)) HOUR, \'%H\') as short_hour,
             max(dailyrainin) as dailyrainin')
             ->eq('station_id', $station_id)
-            ->gte('dateutc', date('Y-m-d H:i:s', time() - 604800))
+            ->gte('dateutc', date('Y-m-d H:i:s', time() - 630000)) // 1 week + 6hours
             ->groupBy('hour', 'short_hour')
             ->findAll();
             $result = [];
@@ -295,14 +298,17 @@ class DataPointsController extends BaseController
             }
             $total = 0.0;
             foreach($result as $index => &$record) {
-                if ($index == 0 || $record['short_hour'] == '00' || $record['dailyrainmm'] < $result[$index - 1]['dailyrainmm']) {
+                if ($index == 0) {
+                    continue;
+                }
+                if ($record['short_hour'] == '00' || $record['dailyrainmm'] < $result[$index - 1]['dailyrainmm']) {
                     $record['hourlyrainmm'] = $record['dailyrainmm'];
                 } else {
                     $record['hourlyrainmm'] = round($record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'], 1);
                 }
                 $total += $record['hourlyrainmm'];
             }
-                
+            array_shift($result); // Remove 1st 6hours only used to compute evolution
             $response = [
                 "chartData" => $result,
                 "sumData" => round($total, 1)
@@ -328,11 +334,7 @@ class DataPointsController extends BaseController
             }
             $total = 0.0;
             foreach($result as $index => &$record) {
-                if ($index == 0 || $record['short_hour'] == '00' || $record['dailyrainmm'] < $result[$index - 1]['dailyrainmm']) {
-                    $record['hourlyrainmm'] = $record['dailyrainmm'];
-                } else {
-                    $record['hourlyrainmm'] = round($record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'], 1);
-                }
+                $record['hourlyrainmm'] = $record['dailyrainmm'];
                 $total += $record['hourlyrainmm'];
             }
             
