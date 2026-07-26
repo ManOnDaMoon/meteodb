@@ -256,29 +256,29 @@ class DataPointsController extends BaseController
             ->gte('dateutc', date('Y-m-d H:i:s', time() - 90000)) // Fetch previous 25hrs to get correct evolution
             ->groupBy('hour', 'short_hour')
             ->findAll();
-            $result = [];
-            foreach ($data as $dataRecord) {
-                $result[] = $dataRecord->toArray();
+        $result = [];
+        foreach ($data as $dataRecord) {
+            $result[] = $dataRecord->toArray();
+        }
+        $total = 0.0;
+        foreach($result as $index => &$record) {
+            if ($index == 0) {
+                continue;
             }
-            $total = 0.0;
-            foreach($result as $index => &$record) {
-                if ($index == 0) {
-                    continue;
-                }
-                if ($record['short_hour'] == '00' || $result[$index - 1]['dailyrainmm'] < $record['dailyrainmm']) {
-                    $record['hourlyrainmm'] = $record['dailyrainmm'];
-                } else {
-                    $record['hourlyrainmm'] = round($record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'], 1);
-                }
-                $total += $record['hourlyrainmm'];
+            if ($record['short_hour'] == '00' || $record['dailyrainmm'] < $result[$index - 1]['dailyrainmm']) {
+                $record['hourlyrainmm'] = $record['dailyrainmm'];
+            } else {
+                $record['hourlyrainmm'] = round($record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'], 1);
             }
-            array_shift($result); // Remove first value only used to compute evolution
-            $response = [
-                "chartData" => $result,
-                "sumData" => round($total, 1)
-            ];
-            
-            $this->app->json($response);
+            $total += $record['hourlyrainmm'];
+        }
+        array_shift($result); // Remove first value only used to compute evolution
+        $response = [
+            "chartData" => $result,
+            "sumData" => round($total, 1)
+        ];
+        
+        $this->app->json($response);
     }
     
     public function weeklyrain(string $station_id):void
@@ -292,29 +292,29 @@ class DataPointsController extends BaseController
             ->gte('dateutc', date('Y-m-d H:i:s', time() - 630000)) // 1 week + 6hours
             ->groupBy('hour', 'short_hour')
             ->findAll();
-            $result = [];
-            foreach ($data as $dataRecord) {
-                $result[] = $dataRecord->toArray();
+        $result = [];
+        foreach ($data as $dataRecord) {
+            $result[] = $dataRecord->toArray();
+        }
+        $total = 0.0;
+        foreach($result as $index => &$record) {
+            if ($index == 0) {
+                continue;
             }
-            $total = 0.0;
-            foreach($result as $index => &$record) {
-                if ($index == 0) {
-                    continue;
-                }
-                if ($record['short_hour'] == '00' || $record['dailyrainmm'] < $result[$index - 1]['dailyrainmm']) {
-                    $record['hourlyrainmm'] = $record['dailyrainmm'];
-                } else {
-                    $record['hourlyrainmm'] = round($record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'], 1);
-                }
-                $total += $record['hourlyrainmm'];
+            if ($record['short_hour'] == '00' || $record['dailyrainmm'] < $result[$index - 1]['dailyrainmm']) {
+                $record['hourlyrainmm'] = $record['dailyrainmm'];
+            } else {
+                $record['hourlyrainmm'] = round($record['dailyrainmm'] - $result[$index - 1]['dailyrainmm'], 1);
             }
-            array_shift($result); // Remove 1st 6hours only used to compute evolution
-            $response = [
-                "chartData" => $result,
-                "sumData" => round($total, 1)
-            ];
-            
-            $this->app->json($response);
+            $total += $record['hourlyrainmm'];
+        }
+        array_shift($result); // Remove 1st 6hours only used to compute evolution
+        $response = [
+            "chartData" => $result,
+            "sumData" => round($total, 1)
+        ];
+        
+        $this->app->json($response);
     }
     
     public function monthlyrain(string $station_id):void
@@ -325,24 +325,29 @@ class DataPointsController extends BaseController
             date_format(DATE(dateutc) + INTERVAL (HOUR(dateutc) - MOD (HOUR(dateutc), 24)) HOUR, \'%H\') as short_hour,
             max(dailyrainin) as dailyrainin')
             ->eq('station_id', $station_id)
-            ->gte('dateutc', date('Y-m-d H:i:s', time() - 2592000))
+            ->gte('dateutc', date('Y-m-d H:i:s', time() - 2678400))
             ->groupBy('hour', 'short_hour')
             ->findAll();
-            $result = [];
-            foreach ($data as $dataRecord) {
-                $result[] = $dataRecord->toArray();
-            }
-            $total = 0.0;
-            foreach($result as $index => &$record) {
-                $record['hourlyrainmm'] = $record['dailyrainmm'];
-                $total += $record['hourlyrainmm'];
-            }
+        
             
-            $response = [
-                "chartData" => $result,
-                "sumData" => round($total, 1)
-            ];
-            
-            $this->app->json($response);
+        $result = [];
+        foreach ($data as $dataRecord) {
+            $result[] = $dataRecord->toArray();
+        }
+        $total = 0.0;
+        foreach($result as $index => &$record) {
+            if ($index == 0) {
+                continue;
+            }
+            $record['hourlyrainmm'] = $record['dailyrainmm'];
+            $total += $record['hourlyrainmm'];
+        }
+
+        $response = [
+            "chartData" => $result,
+            "sumData" => round($total, 1)
+        ];
+        
+        $this->app->json($response);
     }
 }
