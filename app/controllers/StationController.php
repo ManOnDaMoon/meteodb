@@ -150,15 +150,19 @@ class StationController extends BaseController
      *
      * @return void
      */
-    public function evolution(string $station_id):void
+    public function evolution(string $station_id, ?string $history = "1"):void
     {
+        if (!isset($history)) {
+            $history = "1";
+        }
         $StationRecord = new StationRecord($this->app->db());
         $StationRecord->with('currentDataPoint')->find($station_id);
         
         if ($StationRecord->isHydrated()){
             $this->app->render('station/station_evolution.latte', [
                 'page_title' => 'Evolution',
-                'station' => $StationRecord
+                'station' => $StationRecord,
+                'history' => $history
             ]);
         }
     }

@@ -10,8 +10,9 @@ use Tracy\Debugger;
 
 class DataPointsController extends BaseController
 {
-    public function dailytemp(string $station_id):void
+    public function dailytemp(string $station_id, ?string $history = "1"):void
     {
+        $history = intval($history);
         $DataPoint = new DatapointRecord($this->db());
         $data = $DataPoint->select(
             'date_format(dateutc, \'%Y-%m-%d %H:00:00\') as hour,
@@ -19,7 +20,7 @@ class DataPointsController extends BaseController
             min(tempf) as mintempf,
             max(tempf) as maxtempf')
         ->eq('station_id', $station_id)
-        ->gte('dateutc', date('Y-m-d H:i:s', time() - 86400))        
+        ->gte('dateutc', date('Y-m-d H:i:s', time() - ($history * 86400)))
         ->groupBy('hour')
         ->findAll();
         $result = [];
@@ -74,8 +75,9 @@ class DataPointsController extends BaseController
             $this->app->json($result);
     }
     
-    public function dailypress(string $station_id):void
+    public function dailypress(string $station_id, ?string $history = "1"):void
     {
+        $history = intval($history);
         $DataPoint = new DatapointRecord($this->db());
         $data = $DataPoint->select(
             'date_format(dateutc, \'%Y-%m-%d %H:00:00\') as hour,
@@ -83,7 +85,7 @@ class DataPointsController extends BaseController
             min(baromin) as minbaromin,
             max(baromin) as maxbaromin')
             ->eq('station_id', $station_id)
-            ->gte('dateutc', date('Y-m-d H:i:s', time() - 86400))
+            ->gte('dateutc', date('Y-m-d H:i:s', time() - ($history * 86400)))
             ->groupBy('hour')->findAll();
             $result = [];
             foreach ($data as $dataRecord) {
@@ -131,8 +133,9 @@ class DataPointsController extends BaseController
             $this->app->json($result);
     }
     
-    public function dailyhumid(string $station_id):void
+    public function dailyhumid(string $station_id, ?string $history = "1"):void
     {
+        $history = intval($history);
         $DataPoint = new DatapointRecord($this->db());
         $data = $DataPoint->select(
             'date_format(dateutc, \'%Y-%m-%d %H:00:00\') as hour,
@@ -140,7 +143,7 @@ class DataPointsController extends BaseController
             min(humidity) as minhumidity,
             max(humidity) as maxhumidity')
             ->eq('station_id', $station_id)
-            ->gte('dateutc', date('Y-m-d H:i:s', time() - 86400))
+            ->gte('dateutc', date('Y-m-d H:i:s', time() - ($history * 86400)))
             ->groupBy('hour')->findAll();
             $result = [];
             foreach ($data as $dataRecord) {
@@ -188,8 +191,9 @@ class DataPointsController extends BaseController
             $this->app->json($result);
     }
     
-    public function dailyindoortemp(string $station_id):void
+    public function dailyindoortemp(string $station_id, ?string $history = "1"):void
     {
+        $history = intval($history);
         $DataPoint = new DatapointRecord($this->db());
         $data = $DataPoint->select(
             'date_format(dateutc, \'%Y-%m-%d %H:00:00\') as hour,
@@ -197,7 +201,7 @@ class DataPointsController extends BaseController
             min(indoortempf) as minindoortempf,
             max(indoortempf) as maxindoortempf')
             ->eq('station_id', $station_id)
-            ->gte('dateutc', date('Y-m-d H:i:s', time() - 86400))
+            ->gte('dateutc', date('Y-m-d H:i:s', time() - ($history * 86400)))
             ->groupBy('hour')->findAll();
             $result = [];
             foreach ($data as $dataRecord) {
@@ -245,15 +249,16 @@ class DataPointsController extends BaseController
             $this->app->json($result);
     }
     
-    public function dailyrain(string $station_id):void
+    public function dailyrain(string $station_id, ?string $history = "1"):void
     {
+        $history = intval($history);
         $DataPoint = new DatapointRecord($this->db());
         $data = $DataPoint->select(
             'date_format(dateutc, \'%Y-%m-%d %H:00:00\') as hour,
             date_format(dateutc, \'%H\') as short_hour,
             max(dailyrainin) as dailyrainin')
             ->eq('station_id', $station_id)
-            ->gte('dateutc', date('Y-m-d H:i:s', time() - 90000)) // Fetch previous 25hrs to get correct evolution
+            ->gte('dateutc', date('Y-m-d H:i:s', time() - ($history * 86400))) // Fetch previous 25hrs to get correct evolution
             ->groupBy('hour', 'short_hour')
             ->findAll();
         $result = [];
