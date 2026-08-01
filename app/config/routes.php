@@ -45,16 +45,16 @@ use app\controllers\DataPointsController;
         $router->get('/@station_id/daily-humid(/@history:[0-9]{1})', DataPointsController::class . '->dailyhumid')->setAlias('data_daily_humidity');
         $router->get('/@station_id/daily-indoortemp(/@history:[0-9]{1})', DataPointsController::class . '->dailyindoortemp')->setAlias('data_daily_indoortemp');
         $router->get('/@station_id/daily-rain(/@history:[0-9]{1})', DataPointsController::class . '->dailyrain')->setAlias('data_daily_rain');
-        $router->get('/@station_id/weekly-temp', DataPointsController::class . '->weeklytemp')->setAlias('data_weekly_temperature');
-        $router->get('/@station_id/weekly-press', DataPointsController::class . '->weeklypress')->setAlias('data_weekly_pressure');
-        $router->get('/@station_id/weekly-humid', DataPointsController::class . '->weeklyhumid')->setAlias('data_weekly_humidity');
-        $router->get('/@station_id/weekly-indoortemp', DataPointsController::class . '->weeklyindoortemp')->setAlias('data_weekly_indoortemp');
-        $router->get('/@station_id/weekly-rain', DataPointsController::class . '->weeklyrain')->setAlias('data_weekly_rain');
-        $router->get('/@station_id/monthly-temp', DataPointsController::class . '->monthlytemp')->setAlias('data_monthly_temperature');
-        $router->get('/@station_id/monthly-press', DataPointsController::class . '->monthlypress')->setAlias('data_monthly_pressure');
-        $router->get('/@station_id/monthly-humid', DataPointsController::class . '->monthlyhumid')->setAlias('data_monthly_humidity');
-        $router->get('/@station_id/monthly-indoortemp', DataPointsController::class . '->monthlyindoortemp')->setAlias('data_monthly_indoortemp');
-        $router->get('/@station_id/monthly-rain', DataPointsController::class . '->monthlyrain')->setAlias('data_monthly_rain');
+        $router->get('/@station_id/weekly-temp(/@history:[0-9]{1})', DataPointsController::class . '->weeklytemp')->setAlias('data_weekly_temperature');
+        $router->get('/@station_id/weekly-press(/@history:[0-9]{1})', DataPointsController::class . '->weeklypress')->setAlias('data_weekly_pressure');
+        $router->get('/@station_id/weekly-humid(/@history:[0-9]{1})', DataPointsController::class . '->weeklyhumid')->setAlias('data_weekly_humidity');
+        $router->get('/@station_id/weekly-indoortemp(/@history:[0-9]{1})', DataPointsController::class . '->weeklyindoortemp')->setAlias('data_weekly_indoortemp');
+        $router->get('/@station_id/weekly-rain(/@history:[0-9]{1})', DataPointsController::class . '->weeklyrain')->setAlias('data_weekly_rain');
+        $router->get('/@station_id/monthly-temp(/@history:[0-9]{1})', DataPointsController::class . '->monthlytemp')->setAlias('data_monthly_temperature');
+        $router->get('/@station_id/monthly-press(/@history:[0-9]{1})', DataPointsController::class . '->monthlypress')->setAlias('data_monthly_pressure');
+        $router->get('/@station_id/monthly-humid(/@history:[0-9]{1})', DataPointsController::class . '->monthlyhumid')->setAlias('data_monthly_humidity');
+        $router->get('/@station_id/monthly-indoortemp(/@history:[0-9]{1})', DataPointsController::class . '->monthlyindoortemp')->setAlias('data_monthly_indoortemp');
+        $router->get('/@station_id/monthly-rain(/@history:[0-9]{1})', DataPointsController::class . '->monthlyrain')->setAlias('data_monthly_rain');
         
     }, [SecurityHeadersMiddleware::class, LoginMiddleware::class]);
     

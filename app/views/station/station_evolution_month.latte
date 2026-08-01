@@ -21,19 +21,22 @@
 	</script>
 	<div class="tabs one">
 		<input id='tab-day' type='radio' name='tabgroupB' />
-		<label for='tab-day'><a class="pseudo button toggle" href="{route('station_evolution', ['station_id' => $station->station_id])}">Jour</a></label>
+		<label for='tab-day'><a class="pseudo button toggle" href="{route('station_evolution', ['station_id' => $station->station_id, 'history' => ''])}">Jour</a></label>
 		<input id='tab-week' type='radio' name='tabgroupB'/>
-		<label for='tab-week'><a class="pseudo button toggle" href="{route('station_evolution_week', ['station_id' => $station->station_id])}">Semaine</a></label>
+		<label for='tab-week'><a class="pseudo button toggle" href="{route('station_evolution_week', ['station_id' => $station->station_id, 'history' => ''])}">Semaine</a></label>
 		<input id='tab-week' type='radio' name='tabgroupB' checked/>
 		<label class="pseudo button toggle" for="tab-week">Mois</label>
 		<input id='tab-show' type='radio' name='tabgroubB'>
 		<label for='tab-show'><a class="pseudo button toggle" href="{route('station_show', ['station_id' => $station->station_id])}">Retour</a></label>
 		<div class="row">
 			<div>
+			<a id='tab-month-1' class="button" {if ($history == "1")} disabled {else} href="{route('station_evolution_month', ['station_id' => $station->station_id, 'history' => "1"])}" {/if}>x1</a>
+			<a id='tab-month-2' class="button" {if ($history == "2")} disabled {else} href="{route('station_evolution_month', ['station_id' => $station->station_id, 'history' => "2"])}" {/if}>x2</a>
+			<a id='tab-month-3' class="button" {if ($history == "3")} disabled {else} href="{route('station_evolution_month', ['station_id' => $station->station_id, 'history' => "3"])}" {/if}>x3</a>
 				<h2>Mois</h2>
 				<div id="monthly_chart_container" style="width: 90%; margin: auto; ">
 					<h3>Température extérieure</h3> 
-					<div id="monthly_temp_chart" data-url="{route('data_monthly_temperature', ['station_id' => $station->station_id])}"></div>
+					<div id="monthly_temp_chart" data-url="{route('data_monthly_temperature', ['station_id' => $station->station_id, 'history' => $history])}"></div>
 					<h3>Pluie</h3>
 					<div>
 					<article class="card">
@@ -41,13 +44,13 @@
 						<span class="label pseudo" style="margin: 0;"><h1 id="monthly-rain-total"></h1></span>
 					</article>
 					</div> 
-					<div id="monthly_rain_chart" data-total-field="monthly-rain-total" data-url="{route('data_monthly_rain', ['station_id' => $station->station_id])}"></div>
+					<div id="monthly_rain_chart" data-total-field="monthly-rain-total" data-url="{route('data_monthly_rain', ['station_id' => $station->station_id, 'history' => $history])}"></div>
 					<h3>Pression athmosphérique</h3> 
-					<div id="monthly_press_chart" data-url="{route('data_monthly_pressure', ['station_id' => $station->station_id])}"></div>
+					<div id="monthly_press_chart" data-url="{route('data_monthly_pressure', ['station_id' => $station->station_id, 'history' => $history])}"></div>
 					<h3>Humidité</h3> 
-					<div id="monthly_humid_chart" data-url="{route('data_monthly_humidity', ['station_id' => $station->station_id])}"></div>
+					<div id="monthly_humid_chart" data-url="{route('data_monthly_humidity', ['station_id' => $station->station_id, 'history' => $history])}"></div>
 					<h3>Température intérieure</h3> 
-					<div id="monthly_indoortemp_chart" data-url="{route('data_monthly_indoortemp', ['station_id' => $station->station_id])}"></div>
+					<div id="monthly_indoortemp_chart" data-url="{route('data_monthly_indoortemp', ['station_id' => $station->station_id, 'history' => $history])}"></div>
 				</div>
 			</div>
 		</div>

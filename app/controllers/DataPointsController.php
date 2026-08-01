@@ -34,7 +34,7 @@ class DataPointsController extends BaseController
     // Agregate data by 3 hours span.
     // Shoutout to Stackoverflow for this:
     // https://stackoverflow.com/questions/73621451/how-to-group-datetime-into-intervals-of-3-hours-in-mysql
-    public function weeklytemp(string $station_id):void
+    public function weeklytemp(string $station_id, ?string $history = "1"):void
     {
         $DataPoint = new DatapointRecord($this->db());
         $data = $DataPoint->select(
@@ -43,7 +43,7 @@ class DataPointsController extends BaseController
             min(tempf) as mintempf,
             max(tempf) as maxtempf')
             ->eq('station_id', $station_id)
-            ->gte('dateutc', date('Y-m-d H:i:s', time() - 604800))
+            ->gte('dateutc', date('Y-m-d H:i:s', time() - ($history * 604800)))
             ->groupBy('hour')->findAll();
             $result = [];
             foreach ($data as $dataRecord) {
@@ -56,7 +56,7 @@ class DataPointsController extends BaseController
     // Agregate data by 24 hours span.
     // Shoutout to Stackoverflow for this:
     // https://stackoverflow.com/questions/73621451/how-to-group-datetime-into-intervals-of-3-hours-in-mysql
-    public function monthlytemp(string $station_id):void
+    public function monthlytemp(string $station_id, ?string $history = "1"):void
     {
         $DataPoint = new DatapointRecord($this->db());
         $data = $DataPoint->select(
@@ -65,7 +65,7 @@ class DataPointsController extends BaseController
             min(tempf) as mintempf,
             max(tempf) as maxtempf')
             ->eq('station_id', $station_id)
-            ->gte('dateutc', date('Y-m-d H:i:s', time() - 2592000)) // 30j
+            ->gte('dateutc', date('Y-m-d H:i:s', time() - ($history * 2592000))) // 30j
             ->groupBy('hour')->findAll();
             $result = [];
             foreach ($data as $dataRecord) {
@@ -95,7 +95,7 @@ class DataPointsController extends BaseController
             $this->app->json($result);
     }
     
-    public function weeklypress(string $station_id):void
+    public function weeklypress(string $station_id, ?string $history = "1"):void
     {
         $DataPoint = new DatapointRecord($this->db());
         $data = $DataPoint->select(
@@ -104,7 +104,7 @@ class DataPointsController extends BaseController
             min(baromin) as minbaromin,
             max(baromin) as maxbaromin')
             ->eq('station_id', $station_id)
-            ->gte('dateutc', date('Y-m-d H:i:s', time() - 604800))
+            ->gte('dateutc', date('Y-m-d H:i:s', time() - ($history * 604800)))
             ->groupBy('hour')->findAll();
             $result = [];
             foreach ($data as $dataRecord) {
@@ -114,7 +114,7 @@ class DataPointsController extends BaseController
             $this->app->json($result);
     }
     
-    public function monthlypress(string $station_id):void
+    public function monthlypress(string $station_id, ?string $history = "1"):void
     {
         $DataPoint = new DatapointRecord($this->db());
         $data = $DataPoint->select(
@@ -123,7 +123,7 @@ class DataPointsController extends BaseController
             min(baromin) as minbaromin,
             max(baromin) as maxbaromin')
             ->eq('station_id', $station_id)
-            ->gte('dateutc', date('Y-m-d H:i:s', time() - 2592000))
+            ->gte('dateutc', date('Y-m-d H:i:s', time() - ($history * 2592000)))
             ->groupBy('hour')->findAll();
             $result = [];
             foreach ($data as $dataRecord) {
@@ -153,7 +153,7 @@ class DataPointsController extends BaseController
             $this->app->json($result);
     }
     
-    public function weeklyhumid(string $station_id):void
+    public function weeklyhumid(string $station_id, ?string $history = "1"):void
     {
         $DataPoint = new DatapointRecord($this->db());
         $data = $DataPoint->select(
@@ -162,7 +162,7 @@ class DataPointsController extends BaseController
             min(humidity) as minhumidity,
             max(humidity) as maxhumidity')
             ->eq('station_id', $station_id)
-            ->gte('dateutc', date('Y-m-d H:i:s', time() - 604800))
+            ->gte('dateutc', date('Y-m-d H:i:s', time() - ($history * 604800)))
             ->groupBy('hour')->findAll();
             $result = [];
             foreach ($data as $dataRecord) {
@@ -172,7 +172,7 @@ class DataPointsController extends BaseController
             $this->app->json($result);
     }
     
-    public function monthlyhumid(string $station_id):void
+    public function monthlyhumid(string $station_id, ?string $history = "1"):void
     {
         $DataPoint = new DatapointRecord($this->db());
         $data = $DataPoint->select(
@@ -181,7 +181,7 @@ class DataPointsController extends BaseController
             min(humidity) as minhumidity,
             max(humidity) as maxhumidity')
             ->eq('station_id', $station_id)
-            ->gte('dateutc', date('Y-m-d H:i:s', time() - 2592000))
+            ->gte('dateutc', date('Y-m-d H:i:s', time() - ($history * 2592000)))
             ->groupBy('hour')->findAll();
             $result = [];
             foreach ($data as $dataRecord) {
@@ -211,7 +211,7 @@ class DataPointsController extends BaseController
             $this->app->json($result);
     }
     
-    public function weeklyindoortemp(string $station_id):void
+    public function weeklyindoortemp(string $station_id, ?string $history = "1"):void
     {
         $DataPoint = new DatapointRecord($this->db());
         $data = $DataPoint->select(
@@ -220,7 +220,7 @@ class DataPointsController extends BaseController
             min(indoortempf) as minindoortempf,
             max(indoortempf) as maxindoortempf')
             ->eq('station_id', $station_id)
-            ->gte('dateutc', date('Y-m-d H:i:s', time() - 604800))
+            ->gte('dateutc', date('Y-m-d H:i:s', time() - ($history * 604800)))
             ->groupBy('hour')->findAll();
             $result = [];
             foreach ($data as $dataRecord) {
@@ -230,7 +230,7 @@ class DataPointsController extends BaseController
             $this->app->json($result);
     }
     
-    public function monthlyindoortemp(string $station_id):void
+    public function monthlyindoortemp(string $station_id, ?string $history = "1"):void
     {
         $DataPoint = new DatapointRecord($this->db());
         $data = $DataPoint->select(
@@ -239,7 +239,7 @@ class DataPointsController extends BaseController
             min(indoortempf) as minindoortempf,
             max(indoortempf) as maxindoortempf')
             ->eq('station_id', $station_id)
-            ->gte('dateutc', date('Y-m-d H:i:s', time() - 2592000))
+            ->gte('dateutc', date('Y-m-d H:i:s', time() - ($history * 2592000)))
             ->groupBy('hour')->findAll();
             $result = [];
             foreach ($data as $dataRecord) {
@@ -286,7 +286,7 @@ class DataPointsController extends BaseController
         $this->app->json($response);
     }
     
-    public function weeklyrain(string $station_id):void
+    public function weeklyrain(string $station_id, ?string $history = "1"):void
     {
         $DataPoint = new DatapointRecord($this->db());
         $data = $DataPoint->select(
@@ -294,7 +294,7 @@ class DataPointsController extends BaseController
             date_format(DATE(dateutc) + INTERVAL (HOUR(dateutc) - MOD (HOUR(dateutc), 6)) HOUR, \'%H\') as short_hour,
             max(dailyrainin) as dailyrainin')
             ->eq('station_id', $station_id)
-            ->gte('dateutc', date('Y-m-d H:i:s', time() - 630000)) // 1 week + 6hours
+            ->gte('dateutc', date('Y-m-d H:i:s', time() - ($history * 604800))) // 1 week + 6hours
             ->groupBy('hour', 'short_hour')
             ->findAll();
         $result = [];
@@ -322,7 +322,7 @@ class DataPointsController extends BaseController
         $this->app->json($response);
     }
     
-    public function monthlyrain(string $station_id):void
+    public function monthlyrain(string $station_id, ?string $history = "1"):void
     {
         $DataPoint = new DatapointRecord($this->db());
         $data = $DataPoint->select(
@@ -330,7 +330,7 @@ class DataPointsController extends BaseController
             date_format(DATE(dateutc) + INTERVAL (HOUR(dateutc) - MOD (HOUR(dateutc), 24)) HOUR, \'%H\') as short_hour,
             max(dailyrainin) as dailyrainin')
             ->eq('station_id', $station_id)
-            ->gte('dateutc', date('Y-m-d H:i:s', time() - 2678400))
+            ->gte('dateutc', date('Y-m-d H:i:s', time() - ($history * 2592000)))
             ->groupBy('hour', 'short_hour')
             ->findAll();
         

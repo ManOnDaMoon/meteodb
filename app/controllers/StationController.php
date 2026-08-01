@@ -150,7 +150,7 @@ class StationController extends BaseController
      *
      * @return void
      */
-    public function evolution(string $station_id, ?string $history = "1"):void
+    public function evolution(string $station_id, ?string $history):void
     {
         if (!isset($history)) {
             $history = "1";
@@ -172,15 +172,19 @@ class StationController extends BaseController
      *
      * @return void
      */
-    public function evolution_week(string $station_id):void
+    public function evolution_week(string $station_id, ?string $history):void
     {
+        if (!isset($history)) {
+            $history = "1";
+        }
         $StationRecord = new StationRecord($this->app->db());
         $StationRecord->with('currentDataPoint')->find($station_id);
         
         if ($StationRecord->isHydrated()){
             $this->app->render('station/station_evolution_week.latte', [
                 'page_title' => 'Evolution',
-                'station' => $StationRecord
+                'station' => $StationRecord,
+                'history' => $history
             ]);
         }
     }
@@ -190,15 +194,19 @@ class StationController extends BaseController
      *
      * @return void
      */
-    public function evolution_month(string $station_id):void
+    public function evolution_month(string $station_id, ?string $history):void
     {
+        if (!isset($history)) {
+            $history = "1";
+        }
         $StationRecord = new StationRecord($this->app->db());
         $StationRecord->with('currentDataPoint')->find($station_id);
         
         if ($StationRecord->isHydrated()){
             $this->app->render('station/station_evolution_month.latte', [
                 'page_title' => 'Evolution',
-                'station' => $StationRecord
+                'station' => $StationRecord,
+                'history' => $history
             ]);
         }
     }

@@ -23,21 +23,20 @@
 		<input id='tab-day' type='radio' name='tabgroupB' checked />
 		<label class="pseudo button toggle" for="tab-day">Jour</label>
 		<input id='tab-week' type='radio' name='tabgroupB'/>
-		<label for='tab-week'><a class="pseudo button toggle" href="{route('station_evolution_week', ['station_id' => $station->station_id])}">Semaine</a></label>
+		<label for='tab-week'><a class="pseudo button toggle" href="{route('station_evolution_week', ['station_id' => $station->station_id, 'history' => ''])}">Semaine</a></label>
 		<input id='tab-month' type='radio' name='tabgroupB'/>
-		<label for='tab-month'><a class="pseudo button toggle" href="{route('station_evolution_month', ['station_id' => $station->station_id])}">Mois</a></label>
+		<label for='tab-month'><a class="pseudo button toggle" href="{route('station_evolution_month', ['station_id' => $station->station_id, 'history' => ''])}">Mois</a></label>
 		<input id='tab-show' type='radio' name='tabgroubB'>
 		<label for='tab-show'><a class="pseudo button toggle" href="{route('station_show', ['station_id' => $station->station_id])}">Retour</a></label>
-		<br />
 		<div class="row">
 			<div>
 			<a id='tab-day-1' class="button" {if ($history == "1")} disabled {else} href="{route('station_evolution', ['station_id' => $station->station_id, 'history' => "1"])}" {/if}>x1</a>
-		<a id='tab-day-2' class="button" {if ($history == "2")} disabled {else} href="{route('station_evolution', ['station_id' => $station->station_id, 'history' => "2"])}" {/if}>x2</a>
-		<a id='tab-day-3' class="button" {if ($history == "3")} disabled {else} href="{route('station_evolution', ['station_id' => $station->station_id, 'history' => "3"])}" {/if}>x3</a>
+			<a id='tab-day-2' class="button" {if ($history == "2")} disabled {else} href="{route('station_evolution', ['station_id' => $station->station_id, 'history' => "2"])}" {/if}>x2</a>
+			<a id='tab-day-3' class="button" {if ($history == "3")} disabled {else} href="{route('station_evolution', ['station_id' => $station->station_id, 'history' => "3"])}" {/if}>x3</a>
+			<a id='tab-day-4' class="button" {if ($history == "4")} disabled {else} href="{route('station_evolution', ['station_id' => $station->station_id, 'history' => "4"])}" {/if}>x4</a>
+			<a id='tab-day-5' class="button" {if ($history == "5")} disabled {else} href="{route('station_evolution', ['station_id' => $station->station_id, 'history' => "5"])}" {/if}>x5</a>
+			<a id='tab-day-6' class="button" {if ($history == "6")} disabled {else} href="{route('station_evolution', ['station_id' => $station->station_id, 'history' => "6"])}" {/if}>x6</a>
 				<h2>Jour</h2>
-						<button id='tab-day-1' type='radio' name='tabgroupC' {if ($history == "1")} checked {else} href="{route('station_evolution', ['station_id' => $station->station_id, 'history' => "1"])}" {/if}>x1</button>
-		<button id='tab-day-2' type='radio' name='tabgroupC' {if ($history == "2")} checked {else} href="{route('station_evolution', ['station_id' => $station->station_id, 'history' => "2"])}" {/if}>x2</button>
-		<button id='tab-day-3' type='radio' name='tabgroupC' {if ($history == "3")} checked {else} href="{route('station_evolution', ['station_id' => $station->station_id, 'history' => "3"])}" {/if}>x3</button>
 				<div id="chart_container" style="width: 90%; margin: auto; ">
 					<h3>Température extérieure</h3> 
 					<div id="daily_temp_chart" data-url="{route('data_daily_temperature', ['station_id' => $station->station_id, 'history' => $history])}"></div>
