@@ -24,6 +24,7 @@
 			{if (!$username)}<a href="{route('login')}" class="pseudo button icon-puzzle">Connexion</a>{/if}
 		    {if ($username)}
 		    	<a href="{route('user')}" class="pseudo button">Utilisateurs</a>
+		    <a href="{route('api_tokens')}" class="pseudo button">Jetons API</a>
 		    	<a href="{route('logout')}" class="pseudo button">Déconnexion</a>
 	    	{/if}
 		  </div>
