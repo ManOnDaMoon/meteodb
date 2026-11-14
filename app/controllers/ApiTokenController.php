@@ -28,7 +28,7 @@ class ApiTokenController extends BaseController
         if ($name === '') {
             $name = 'KoboWeather';
         }
-        $name = mb_substr($name, 0, 80);
+        $name = function_exists('mb_substr') ? mb_substr($name, 0, 80) : substr($name, 0, 80);
 
         $token = 'mdb_' . bin2hex(random_bytes(32));
         $record = new ApiTokenRecord($this->db());
