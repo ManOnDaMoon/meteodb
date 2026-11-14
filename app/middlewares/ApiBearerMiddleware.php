@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace app\middlewares;
 
 use app\records\ApiTokenRecord;
+use app\records\UserRecord;
 use flight\Engine;
 
 class ApiBearerMiddleware
@@ -33,7 +34,12 @@ class ApiBearerMiddleware
             $this->reject();
         }
 
-        $user = (new UserRecord($this->app->db()))->find($record->userid);\n        if (!$user->isHydrated()) {\n            $this->reject();\n        }\n\n        $this->app->set('api.user_id', (int) $record->userid);
+        $user = (new UserRecord($this->app->db()))->find($record->userid);
+        if (!$user->isHydrated()) {
+            $this->reject();
+        }
+
+        $this->app->set('api.user_id', (int) $record->userid);
     }
 
     private function reject(): void
