@@ -1,5 +1,9 @@
 # API meteodb v1
 
+## Installation
+
+Après la mise à jour du code, ouvrez une fois /install sur l'instance meteodb. Le chemin d'installation existant crée la table api_tokens s'il elle n'existe pas, sans toucher aux relevés existants.
+
 ## Jetons de compte
 
 Connectez-vous et ouvrez « Jetons API » dans le menu. Créez un jeton par appareil et copiez le secret lorsqu'il s'affiche. La base ne conserve que son empreinte SHA-256. Les jetons peuvent être révoqués depuis cette page.
