@@ -24,6 +24,11 @@ class CurrentStationApiController extends BaseController
             return;
         }
 
+        $numeric = static function (string $field) use ($point): ?float {
+            $value = $point->{$field};
+            return $value === null ? null : (float) $value;
+        };
+
         $this->app->json([
             'station' => ['id' => (string) $station->station_id, 'name' => (string) $station->description],
             'updated_at' => gmdate('Y-m-d\TH:i:s\Z', strtotime($point->dateutc . ' UTC')),
