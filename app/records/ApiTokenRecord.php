@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace app\\records;
+namespace app\records;
 
 /**
  * ActiveRecord model for revocable, read-only API credentials.
@@ -13,7 +13,7 @@ namespace app\\records;
  * @property string $token_hash
  * @property string $created_at
  */
-class ApiTokenRecord extends \\flight\\ActiveRecord
+class ApiTokenRecord extends \flight\ActiveRecord
 {
     public function __construct($databaseConnection)
     {
