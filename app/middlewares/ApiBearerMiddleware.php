@@ -19,6 +19,13 @@ class ApiBearerMiddleware
 
     public function before(): void
     {
+        $https = !empty($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off';
+        $forwardedProto = strtolower(trim(explode(',', (string) ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? ''))[0]));
+        if (!$https && $forwardedProto !== 'https') {
+            $this->app->json(['error' => ['code' => 'https_required', 'message' => 'HTTPS is required.']], 426);
+            exit;
+        }
+
         $authorization = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
         if ($authorization === '' && method_exists($this->app->request(), 'getHeader')) {
             $authorization = (string) $this->app->request()->getHeader('Authorization');
