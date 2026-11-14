@@ -2,7 +2,7 @@
 
 ## Installation
 
-Après la mise à jour du code, ouvrez une fois /install sur l'instance meteodb. Le chemin d'installation existant crée la table api_tokens s'il elle n'existe pas, sans toucher aux relevés existants.
+Après la mise à jour du code, ouvrez une fois /install sur l'instance meteodb. Le chemin d'installation existant crée la table api_tokens si elle n'existe pas, sans toucher aux relevés existants.
 
 ## Jetons de compte
 
