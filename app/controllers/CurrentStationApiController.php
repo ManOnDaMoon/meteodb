@@ -29,6 +29,11 @@ class CurrentStationApiController extends BaseController
             return $value === null ? null : (float) $value;
         };
 
+        $text = static function (string $field) use ($point): ?string {
+            $value = $point->{$field};
+            return $value === null ? null : (string) $value;
+        };
+
         $this->app->json([
             'station' => ['id' => (string) $station->station_id, 'name' => (string) $station->description],
             'updated_at' => gmdate('Y-m-d\TH:i:s\Z', strtotime($point->dateutc . ' UTC')),
@@ -46,7 +51,7 @@ class CurrentStationApiController extends BaseController
                 'wind_speed_kmh' => $numeric('windspeedkmh'),
                 'wind_gust_kmh' => $numeric('windgustkmh'),
                 'wind_direction_degrees' => $numeric('winddir'),
-                'wind_direction_cardinal' => $point->windcardinal ?? null,
+                'wind_direction_cardinal' => $text('windcardinal'),
             ],
         ]);
     }
