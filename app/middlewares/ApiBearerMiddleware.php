@@ -33,7 +33,7 @@ class ApiBearerMiddleware
             $this->reject();
         }
 
-        $this->app->set('api.user_id', (int) $record->userid);
+        $user = (new UserRecord($this->app->db()))->find($record->userid);\n        if (!$user->isHydrated()) {\n            $this->reject();\n        }\n\n        $this->app->set('api.user_id', (int) $record->userid);
     }
 
     private function reject(): void
