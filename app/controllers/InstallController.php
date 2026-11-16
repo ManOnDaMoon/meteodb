@@ -68,6 +68,17 @@ class InstallController extends BaseController
         ) ENGINE = InnoDB;
         ";
         
+        $sqlApiTokens = "
+        CREATE TABLE IF NOT EXISTS `api_tokens` (
+            `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            `userid` INT UNSIGNED NOT NULL,
+            `name` VARCHAR(80) NOT NULL,
+            `token_hash` CHAR(64) NOT NULL UNIQUE,
+            `created_at` DATETIME NOT NULL,
+            INDEX (`userid`)
+        ) ENGINE = InnoDB;
+        ";
+
         $sqlTestInstall = "SELECT * FROM users";
         $notInstalled = false;
         try {
@@ -80,6 +91,7 @@ class InstallController extends BaseController
         $this->db()->query($sqlStationsTable);
         $this->db()->query($sqlUsersTable);
         $this->db()->query($sqlAuthTokens);
+        $this->db()->query($sqlApiTokens);
         
         if ($notInstalled) {
             $UserRecord = new UserRecord($this->db());

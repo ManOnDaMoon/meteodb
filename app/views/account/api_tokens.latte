@@ -1,0 +1,40 @@
+{extends '../layout.latte'}
+
+{block content}
+<h1>Jetons API</h1>
+<p>Les jetons donnent accès en lecture aux stations visibles par votre compte. Le secret complet est affiché à sa création. Révoquez les jetons dont vous n'avez plus besoin.</p>
+
+{if $new_token}
+<div class="alert">
+    <strong>Copiez maintenant ce jeton :</strong>
+    <code>{$new_token}</code>
+    <p>Il ne sera plus affiché après avoir quitté cette page.</p>
+</div>
+{/if}
+
+<h2>Créer un jeton</h2>
+<form action="{route('api_token_create')}" method="post">
+    <fieldset class="flex one">
+        <label><input type="text" name="name" placeholder="Nom (ex. KoboWeather)" maxlength="80"></label>
+        <label><button type="submit">Créer un jeton</button></label>
+    </fieldset>
+</form>
+
+<h2>Jetons existants</h2>
+<table class="primary">
+    <thead><tr><th>Nom</th><th>Créé le (UTC)</th><th>Action</th></tr></thead>
+    <tbody>
+    {foreach $tokens as $token}
+        <tr>
+            <td>{$token->name}</td>
+            <td>{$token->created_at}</td>
+            <td>
+                <form action="{route('api_token_revoke', ['id' => $token->id])}" method="post">
+                    <button class="warning" type="submit">Révoquer</button>
+                </form>
+            </td>
+        </tr>
+    {/foreach}
+    </tbody>
+</table>
+{/block}
