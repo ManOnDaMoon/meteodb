@@ -2,6 +2,9 @@
 Options -MultiViews
 Options All -Indexes
 
+# Forward the Authorization header to PHP for Bearer-token API requests.
+SetEnvIf Authorization "(.+)" HTTP_AUTHORIZATION=$1
+
 RewriteEngine On
 
 # The following rule tells Apache that if the requested filename
