@@ -49,7 +49,7 @@
 				<div>
 				<article class="card" style="height: 100%;">
 					<header style="text-align: center;"><strong>🌦️&nbsp;Tendance estimée (3 h)</strong></header>
-					<span class="label pseudo" style="margin: 0;"><h2>{$pressureTrend['label']}</h2></span>
+					<span class="label pseudo" style="margin: 0;"><h2>{if ($pressureTrend['condition'] === 'sun')}☀️{elseif ($pressureTrend['condition'] === 'partly_cloudy')}🌤️{elseif ($pressureTrend['condition'] === 'cloud')}☁️{elseif ($pressureTrend['condition'] === 'rain')}🌧️{elseif ($pressureTrend['condition'] === 'storm')}⛈️{else}❔{/if}&nbsp;{$pressureTrend['label']}</h2></span>
 					{if ($pressureTrend['change_hpa'] !== null)}
 						<p style="text-align: center;">Variation : {$pressureTrend['change_hpa']|number:1}&nbsp;hPa</p>
 					{/if}
