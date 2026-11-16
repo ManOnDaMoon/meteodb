@@ -26,11 +26,13 @@ class ApiBearerMiddleware
             exit;
         }
 
-        $authorization = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
+	$authorization = trim((string) ($_SERVER['HTTP_AUTHORIZATION'] ?? ''));
+	if ($authorization === '') {
+	    $authorization = trim((string) ($_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? ''));
+	}
         if ($authorization === '' && method_exists($this->app->request(), 'getHeader')) {
             $authorization = (string) $this->app->request()->getHeader('Authorization');
         }
-
         if (!preg_match('/^Bearer ([A-Za-z0-9_-]+)$/', trim($authorization), $matches)) {
             $this->reject();
         }
