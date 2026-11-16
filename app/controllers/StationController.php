@@ -6,6 +6,7 @@ namespace app\controllers;
 
 use app\records\StationRecord;
 use app\records\DatapointRecord;
+use app\services\PressureTrend;
 use Tracy\Debugger;
 
 class StationController extends BaseController
@@ -62,7 +63,14 @@ class StationController extends BaseController
     {
         $StationRecord = new StationRecord($this->app->db());
         $station = $StationRecord->with('currentDataPoint')->find($station_id);
-        $this->app->render('station/show.latte', [ 'page_title' => $station->description, 'station' => $station ]);
+        $pressureTrend = $station->isHydrated() && $station->currentDataPoint
+            ? PressureTrend::forCurrent($this->app->db(), $station_id, $station->currentDataPoint)
+            : null;
+        $this->app->render('station/show.latte', [
+            'page_title' => $station->description,
+            'station' => $station,
+            'pressureTrend' => $pressureTrend,
+        ]);
     }
     
     /**
