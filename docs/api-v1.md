@@ -21,6 +21,15 @@ La réponse réussie contient le relevé courant dans un seul document JSON :
 {
   "station": {"id": "station-id", "name": "Station"},
   "updated_at": "2026-11-14T12:30:00Z",
+  "pressure_trend": {
+    "period_hours": 3,
+    "change_hpa": 1.3,
+    "classification": "steady",
+    "direction": "steady",
+    "condition": "cloud",
+    "label": "Temps stable estimé",
+    "reference_at": "2026-11-14T09:30:00Z"
+  },
   "measurements": {
     "temperature_c": 12.3,
     "indoor_temperature_c": 20.1,
@@ -40,6 +49,8 @@ La réponse réussie contient le relevé courant dans un seul document JSON :
 }
 
 Mesures absentes sont null. Station inconnue ou station sans relevé: HTTP 404. Jeton absent, malformé, invalide ou révoqué: HTTP 401. Toutes les réponses sont en JSON.
+
+`pressure_trend` compare la pression courante à la moyenne des relevés disponibles dans une fenêtre de dix minutes centrée sur trois heures avant le relevé courant. Le relevé courant doit dater de moins de dix minutes, et au moins un relevé de pression doit exister dans la fenêtre de référence. La variation est arrondie au dixième avant classification : `strong_rise` au-dessus de +3,5 hPa, `moderate_rise` de +1,6 à +3,5, `steady` de −1,5 à +1,5, `moderate_fall` de −3,5 à −1,6 et `strong_fall` sous −3,5. La condition associée est une estimation heuristique, pas une observation du ciel. Si la pression ou l'historique de référence manque ou est trop ancien, `classification`, `direction` et `condition` valent `unavailable`, tandis que `change_hpa` et `reference_at` valent `null`.
 
 Le préfixe /api/v1 réserve un espace stable pour les extensions. Une future route d'historique pourra accepter un indicateur et une période et renvoyer une série horodatée sans changer ce contrat.
 
