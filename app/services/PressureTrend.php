@@ -14,7 +14,8 @@ class PressureTrend
     public static function forCurrent(object $db, string $stationId, object $point): array
     {
         $currentPressure = $point->barohpa;
-        $currentTime = strtotime((string) $point->dateutc . ' UTC');
+        // dateutc is a local wall-clock value in the PHP-configured timezone.
+        $currentTime = strtotime((string) $point->dateutc);
         $currentAge = $currentTime === false ? null : time() - $currentTime;
         if ($currentPressure === null || !is_numeric($currentPressure) || $currentAge === null
             || $currentAge > self::MAX_CURRENT_AGE_SECONDS || $currentAge < -300) {
@@ -22,8 +23,8 @@ class PressureTrend
         }
 
         $referenceTime = $currentTime - self::PERIOD_SECONDS;
-        $start = gmdate('Y-m-d H:i:s', $referenceTime - self::REFERENCE_TOLERANCE_SECONDS);
-        $end = gmdate('Y-m-d H:i:s', $referenceTime + self::REFERENCE_TOLERANCE_SECONDS);
+        $start = date('Y-m-d H:i:s', $referenceTime - self::REFERENCE_TOLERANCE_SECONDS);
+        $end = date('Y-m-d H:i:s', $referenceTime + self::REFERENCE_TOLERANCE_SECONDS);
         $row = $db->fetchRow(
             'SELECT AVG(baromin) AS average_baromin, COUNT(*) AS sample_count
              FROM datapoints

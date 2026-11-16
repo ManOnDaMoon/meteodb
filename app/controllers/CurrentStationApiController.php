@@ -37,7 +37,7 @@ class CurrentStationApiController extends BaseController
 
         $this->app->json([
             'station' => ['id' => (string) $station->station_id, 'name' => (string) $station->description],
-            'updated_at' => gmdate('Y-m-d\TH:i:s\Z', strtotime($point->dateutc . ' UTC')),
+            'updated_at' => gmdate('Y-m-d\TH:i:s\Z', strtotime($point->dateutc)),
             'pressure_trend' => PressureTrend::forCurrent($this->db(), $station_id, $point),
             'measurements' => [
                 'temperature_c' => $numeric('tempc'),
